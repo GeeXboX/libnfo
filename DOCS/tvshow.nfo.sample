@@ -1,0 +1,49 @@
+TV Shows
+~~~~~~~~
+
+The filename of the NFO should be "tvshow.nfo" (Exact, NOT the name of the
+actual TV show) and it should be in the root folder of the TV show.
+The NFO xml file may contain a valid <episodeguideurl> to allow online
+updates. If not, only episodes with nfo files will be added.
+
+    <tvshow>
+        <title>My TV Show</title>
+        <episodeguideurl>http://www.thetvdb.com/api/1D62F2F90030C444/series/seriesid/all/language.zip<episodeguideurl>
+        <!-- select the correct seriesid and language (en.zip) -->
+        <rating>9.900</rating>
+        <episode>0</episode>
+        <plot>The best TV show in the world</plot>
+        <genre>Action and Adventure / Drama</genre>
+        <premiered>2000-01-01</premiered>
+        <studio></studio>
+        <actor>
+            <name>Big John</name>
+            <role>Jack of all trades</role>
+            <thumb></thumb>
+        </actor>
+    </tvshow>
+
+TV Episodes
+~~~~~~~~~~~
+
+The *.nfo must be named exactly as the episode filename (i.e. episodename.avi
+and episodename.nfo) and in the same folder, allowing multiple episode and
+*.nfo files within the same folder.
+
+For multi-part episodes, simply add multiple <episodedetails> XML blocks
+in succession.
+
+    <episodedetails>
+        <title>My TV Episode</title>
+        <rating>10.00</rating>
+        <season>2</season>
+        <episode>1</episode>
+        <plot>he best episode in the world</plot>
+        <credits>Writer</credits>
+        <director>Mr. Vision</director>
+        <aired>2000-01-01</aired>
+        <actor>
+            <name>Little Suzie</name>
+            <role>Pole Jumper/Dancer</role>
+        </actor>
+    </episodedetails>

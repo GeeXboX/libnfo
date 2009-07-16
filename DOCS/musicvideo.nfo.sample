@@ -1,0 +1,20 @@
+Music Videos
+~~~~~~~~~~~~
+
+The filename of the NFO should be the same as the music video file,
+only replacing the original extension with .nfo.
+
+i.e. Bestartistintheworld - Bestsongintheworld.avi should have the
+corresponding nfo filename Bestartistintheworld - Bestsongintheworld.nfo.
+
+    <musicvideo>
+        <title>Bestsongintheworld</title>
+        <artist>Bestartistintheworld</artist>
+        <album>Me</album>
+        <genre>Pop</genre>
+        <runtime>3:20</runtime>
+        <plot>Scantly clad women hoing about</plot>
+        <year>2000</year>
+        <director>and I</director>
+        <studio>Ego prod.</studio>
+    </musicvideo>
