@@ -32,24 +32,24 @@
 extern "C" {
 #endif /* __cplusplus */
 
-#define VH_STRINGIFY(s) #s
-#define VH_TOSTRING(s) VH_STRINGIFY(s)
+#define NFO_STRINGIFY(s) #s
+#define NFO_TOSTRING(s) NFO_STRINGIFY(s)
 
-#define VH_VERSION_INT(a, b, c) (a << 16 | b << 8 | c)
-#define VH_VERSION_DOT(a, b, c) a ##.## b ##.## c
-#define VH_VERSION(a, b, c) VH_VERSION_DOT(a, b, c)
+#define NFO_VERSION_INT(a, b, c) (a << 16 | b << 8 | c)
+#define NFO_VERSION_DOT(a, b, c) a ##.## b ##.## c
+#define NFO_VERSION(a, b, c) NFO_VERSION_DOT(a, b, c)
 
 #define LIBNFO_VERSION_MAJOR  0
 #define LIBNFO_VERSION_MINOR  0
 #define LIBNFO_VERSION_MICRO  1
 
-#define LIBNFO_VERSION_INT VH_VERSION_INT(LIBNFO_VERSION_MAJOR, \
+#define LIBNFO_VERSION_INT NFO_VERSION_INT(LIBNFO_VERSION_MAJOR, \
                                                LIBNFO_VERSION_MINOR, \
                                                LIBNFO_VERSION_MICRO)
-#define LIBNFO_VERSION     VH_VERSION(LIBNFO_VERSION_MAJOR, \
+#define LIBNFO_VERSION     NFO_VERSION(LIBNFO_VERSION_MAJOR, \
                                            LIBNFO_VERSION_MINOR, \
                                            LIBNFO_VERSION_MICRO)
-#define LIBNFO_VERSION_STR VH_TOSTRING(LIBNFO_VERSION)
+#define LIBNFO_VERSION_STR NFO_TOSTRING(LIBNFO_VERSION)
 #define LIBNFO_BUILD       LIBNFO_VERSION_INT
 
 #include <inttypes.h>
