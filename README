@@ -1,0 +1,23 @@
+
+libNFO
+~~~~~~
+
+GeeXboX libNFO is a small library aiming at parsing and writing NFO files.
+NFO files are used to store metadata information on many multimedia files.
+It is used by both Enna and XBMC Media Center.
+See http://xbmc.org/wiki/?title=Import_-_Export_Library
+for a format definition.
+
+DEVELOPERS
+~~~~~~~~~~
+
+Build using traditional ./configure && make commands.
+Try ./configure --help for list of available build options.
+
+ALWAYS consider nfo.h as the ONLY public header.
+Check your code for warnings before commits.
+
+AUTHORS
+~~~~~~~
+
+Benjamin Zores <ben@geexbox.org>

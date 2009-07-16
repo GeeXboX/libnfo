@@ -1,0 +1,12 @@
+syntax: regexp
+\.o
+\.so
+\.depend
+\.a
+~$
+config.log
+config.mak
+nfo-reader$
+nfo-writer
+^libnfo.pc
+^DOCS/doxygen
