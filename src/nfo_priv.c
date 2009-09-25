@@ -208,6 +208,7 @@ nfo_movie_free (nfo_movie_t *n)
   NFREE (n->director);
   NFREE (n->studio);
 
+  nfo_fileinfo_free (n->fileinfo);
   list_free (n->actors, nfo_actor_free);
   free (n);
 }
@@ -276,6 +277,7 @@ nfo_tvshow_episode_free (nfo_tvshow_episode_t *n)
   NFREE (n->aired);
   NFREE (n->votes);
 
+  nfo_fileinfo_free (n->fileinfo);
   nfo_tvshow_free (n->show);
   list_free (n->actors, nfo_actor_free);
   free (n);

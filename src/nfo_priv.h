@@ -111,6 +111,7 @@ struct nfo_movie_s {
   char *credits;
   char *director;
   char *studio;
+  nfo_fileinfo_t *fileinfo;
   nfo_actor_t **actors;
 };
 
@@ -149,6 +150,7 @@ struct nfo_tvshow_episode_s {
   char *director;
   char *aired;
   char *votes;
+  nfo_fileinfo_t *fileinfo;
   nfo_tvshow_t *show;
   nfo_actor_t **actors;
 };
