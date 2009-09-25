@@ -282,3 +282,27 @@ nfo_tvshow_episode_free (nfo_tvshow_episode_t *n)
   list_free (n->actors, nfo_actor_free);
   free (n);
 }
+
+nfo_t *
+nfo_init (const char *filename)
+{
+  nfo_t *n;
+
+  n = calloc (1, sizeof (nfo_t));
+  n->type = NFO_UNKNOWN;
+
+  /* TODO: need to parse the files */
+
+  return n;
+}
+
+void
+nfo_free (nfo_t *nfo)
+{
+  if (!nfo)
+    return;
+
+  nfo_movie_free (nfo->movie);
+  nfo_tvshow_episode_free (nfo->tvshow);
+  free (nfo);
+}

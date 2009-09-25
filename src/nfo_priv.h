@@ -158,4 +158,10 @@ struct nfo_tvshow_episode_s {
 nfo_tvshow_episode_t *nfo_tvshow_episode_new (void);
 void nfo_tvshow_episode_free (nfo_tvshow_episode_t *n);
 
+struct nfo_s {
+  nfo_type_t type;
+  nfo_movie_t *movie;
+  nfo_tvshow_episode_t *tvshow;
+};
+
 #endif /* NFO_PRIV_H */
