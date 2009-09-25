@@ -219,7 +219,7 @@ char *nfo_actor_get (nfo_actor_t *actor, nfo_actor_field_t f);
 
 /* Streams Get Methods */
 char *nfo_video_stream_get (nfo_stream_video_t *video, nfo_video_field_t f);
-char *nfo_audio_stream_get (nfo_stream_audio_t *video, nfo_audio_field_t f);
-char *nfo_sub_stream_get (nfo_stream_sub_t *video, nfo_sub_field_t f);
+char *nfo_audio_stream_get (nfo_stream_audio_t *audio, nfo_audio_field_t f);
+char *nfo_sub_stream_get (nfo_stream_sub_t *sub, nfo_sub_field_t f);
 
 #endif /* NFO_H */
