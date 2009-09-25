@@ -18,6 +18,7 @@ SHARED_LIBNAME_MAJOR = $(SHARED_LIBNAME).$(shell echo $(VERSION) | cut -f1 -d.)
 
 SRCS =  \
 	nfo.c \
+	nfo_priv.c \
 
 OBJS = $(SRCS:.c=.o)
 

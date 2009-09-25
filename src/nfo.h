@@ -63,6 +63,10 @@ extern "C" {
 #endif /* __cplusplus */
 
 /* Structure definitions */
+typedef struct nfo_stream_video_s nfo_stream_video_t;
+typedef struct nfo_stream_audio_s nfo_stream_audio_t;
+typedef struct nfo_stream_sub_s nfo_stream_sub_t;
+typedef struct nfo_fileinfo_s nfo_fileinfo_t;
 typedef struct nfo_actor_s nfo_actor_t;
 typedef struct nfo_movie_s nfo_movie_t;
 typedef struct nfo_tvshow_s nfo_tvshow_t;
