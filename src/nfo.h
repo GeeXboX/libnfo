@@ -125,15 +125,4 @@ void nfo_actor_get(nfo_actor_t *nfo_actor, nfo_field_t type, char *value);
 void nfo_get(nfo_type_t nfo_type, nfo_field_t type, char *value);
 void nfo_get_actors(nfo_type_t nfo_type, nfo_actor_t *value);
 
-/* Set Methods */
-void nfo_actor_set(nfo_actor_t *nfo_actor, nfo_field_t type, char *value);
-void nfo_set(nfo_type_t nfo_type, nfo_field_t type, char *value);
-void nfo_set_actors(nfo_type_t nfo_type, nfo_actor_t *value);
-
-void nfo_tvshow_add_episode();
-void nfo_tvshow_remove_episode();
-
-void nfo_tvshow_add_actor();
-void nfo_tvshow_remove_actor();
-
 #endif /* NFO_H */
