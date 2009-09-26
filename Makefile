@@ -9,9 +9,6 @@ PKGCONFIG_FILE = libnfo.pc
 NFO_READER      = nfo-reader
 NFO_READER_SRCS = nfo-reader.c
 
-NFO_WRITER      = nfo-writer
-NFO_WRITER_SRCS = nfo-writer.c
-
 CFLAGS += -Isrc
 LDFLAGS += -Lsrc -lnfo
 
@@ -25,16 +22,13 @@ ifeq ($(DOC),yes)
   DOXYGEN = doxygen
 endif
 
-all: lib $(NFO_READER) $(NFO_WRITER) $(DOXYGEN)
+all: lib $(NFO_READER) $(DOXYGEN)
 
 lib:
 	$(MAKE) -C src
 
 $(NFO_READER): lib
 	$(CC) $(NFO_READER_SRCS) $(OPTFLAGS) $(CFLAGS) $(EXTRACFLAGS) $(LDFLAGS) -o $(NFO_READER)
-
-$(NFO_WRITER): lib
-	$(CC) $(NFO_WRITER_SRCS) $(OPTFLAGS) $(CFLAGS) $(EXTRACFLAGS) $(LDFLAGS) -o $(NFO_WRITER)
 
 doxygen:
 ifeq (,$(wildcard DOCS/doxygen))
@@ -43,7 +37,7 @@ endif
 
 clean:
 	$(MAKE) -C src clean
-	rm -f $(NFO_READER) $(NFO_WRITER)
+	rm -f $(NFO_READER)
 
 distclean: clean
 	rm -f config.log
@@ -55,7 +49,6 @@ install: install-pkgconfig
 	$(MAKE) -C src install
 	$(INSTALL) -d $(bindir)
 	$(INSTALL) -c -m 755 $(NFO_READER) $(bindir)
-	$(INSTALL) -c -m 755 $(NFO_WRITER) $(bindir)
 
 install-pkgconfig: $(PKGCONFIG_FILE)
 	$(INSTALL) -d "$(PKGCONFIG_DIR)"
@@ -64,7 +57,6 @@ install-pkgconfig: $(PKGCONFIG_FILE)
 uninstall:
 	$(MAKE) -C src uninstall
 	rm -f $(bindir)/$(NFO_READER)
-	rm -f $(bindir)/$(NFO_WRITER)
 	rm -f $(PKGCONFIG_DIR)/$(PKGCONFIG_FILE)
 
 .PHONY: clean distclean
