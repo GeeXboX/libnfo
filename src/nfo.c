@@ -24,7 +24,20 @@
 #include "nfo.h"
 #include "nfo_priv.h"
 
-#define ARRAY_SIZE(array) (sizeof (array) / sizeof (array[0]))
+static int
+list_get_length (void *list)
+{
+  void **l = list;
+  int n = 0;
+
+  if (!list)
+    return 0;
+
+  while (*(l++))
+    n++;
+
+  return n;
+}
 
 nfo_type_t
 nfo_get_type (nfo_t *nfo)
@@ -103,7 +116,7 @@ nfo_movie_get (nfo_movie_t *movie, nfo_movie_field_t f)
 int
 nfo_movie_get_actors_count (nfo_movie_t *movie)
 {
-  return (movie && movie->actors) ? ARRAY_SIZE (movie->actors) : 0;
+  return (movie && movie->actors) ? list_get_length (movie->actors) : 0;
 }
 
 nfo_actor_t *
@@ -114,7 +127,7 @@ nfo_movie_get_actor (nfo_movie_t *movie, int id)
   if (!movie)
     return NULL;
 
-  max = ARRAY_SIZE (movie->actors);
+  max = list_get_length (movie->actors);
   if (id >= max)
     return NULL;
 
@@ -130,7 +143,7 @@ nfo_movie_get_video_streams_count (nfo_movie_t *movie)
     return 0;
 
   fileinfo = movie->fileinfo;
-  return fileinfo->videos ? ARRAY_SIZE (fileinfo->videos) : 0;
+  return fileinfo->videos ? list_get_length (fileinfo->videos) : 0;
 }
 
 nfo_stream_video_t *
@@ -143,7 +156,7 @@ nfo_movie_get_video_stream (nfo_movie_t *movie, int id)
     return NULL;
 
   fileinfo = movie->fileinfo;
-  max = ARRAY_SIZE (fileinfo->videos);
+  max = list_get_length (fileinfo->videos);
   if (id >= max)
     return NULL;
 
@@ -159,7 +172,7 @@ nfo_movie_get_audio_streams_count (nfo_movie_t *movie)
     return 0;
 
   fileinfo = movie->fileinfo;
-  return fileinfo->audios ? ARRAY_SIZE (fileinfo->audios) : 0;
+  return fileinfo->audios ? list_get_length (fileinfo->audios) : 0;
 }
 
 nfo_stream_audio_t *
@@ -172,7 +185,7 @@ nfo_movie_get_audio_stream (nfo_movie_t *movie, int id)
     return NULL;
 
   fileinfo = movie->fileinfo;
-  max = ARRAY_SIZE (fileinfo->audios);
+  max = list_get_length (fileinfo->audios);
   if (id >= max)
     return NULL;
 
@@ -188,7 +201,7 @@ nfo_movie_get_sub_streams_count (nfo_movie_t *movie)
     return 0;
 
   fileinfo = movie->fileinfo;
-  return fileinfo->subs ? ARRAY_SIZE (fileinfo->subs) : 0;
+  return fileinfo->subs ? list_get_length (fileinfo->subs) : 0;
 }
 
 nfo_stream_sub_t *
@@ -201,7 +214,7 @@ nfo_movie_get_sub_stream (nfo_movie_t *movie, int id)
     return NULL;
 
   fileinfo = movie->fileinfo;
-  max = ARRAY_SIZE (fileinfo->subs);
+  max = list_get_length (fileinfo->subs);
   if (id >= max)
     return NULL;
 
@@ -248,7 +261,7 @@ nfo_tvshow_episode_get (nfo_tvshow_episode_t *ep,
 int
 nfo_tvshow_episode_get_actors_count (nfo_tvshow_episode_t *ep)
 {
-  return (ep && ep->actors) ? ARRAY_SIZE (ep->actors) : 0;
+  return (ep && ep->actors) ? list_get_length (ep->actors) : 0;
 }
 
 nfo_actor_t *
@@ -259,7 +272,7 @@ nfo_tvshow_episode_get_actor (nfo_tvshow_episode_t *ep, int id)
   if (!ep)
     return NULL;
 
-  max = ARRAY_SIZE (ep->actors);
+  max = list_get_length (ep->actors);
   if (id >= max)
     return NULL;
 
@@ -275,7 +288,7 @@ nfo_tvshow_episode_get_video_streams_count (nfo_tvshow_episode_t *ep)
     return 0;
 
   fileinfo = ep->fileinfo;
-  return fileinfo->videos ? ARRAY_SIZE (fileinfo->videos) : 0;
+  return fileinfo->videos ? list_get_length (fileinfo->videos) : 0;
 }
 
 nfo_stream_video_t *
@@ -288,7 +301,7 @@ nfo_tvshow_episode_get_video_stream (nfo_tvshow_episode_t *ep, int id)
     return NULL;
 
   fileinfo = ep->fileinfo;
-  max = ARRAY_SIZE (fileinfo->videos);
+  max = list_get_length (fileinfo->videos);
   if (id >= max)
     return NULL;
 
@@ -304,7 +317,7 @@ nfo_tvshow_episode_get_audio_streams_count (nfo_tvshow_episode_t *ep)
     return 0;
 
   fileinfo = ep->fileinfo;
-  return fileinfo->audios ? ARRAY_SIZE (fileinfo->audios) : 0;
+  return fileinfo->audios ? list_get_length (fileinfo->audios) : 0;
 }
 
 nfo_stream_audio_t *
@@ -317,7 +330,7 @@ nfo_tvshow_episode_get_audio_stream (nfo_tvshow_episode_t *ep, int id)
     return NULL;
 
   fileinfo = ep->fileinfo;
-  max = ARRAY_SIZE (fileinfo->audios);
+  max = list_get_length (fileinfo->audios);
   if (id >= max)
     return NULL;
 
@@ -333,7 +346,7 @@ nfo_tvshow_episode_get_sub_streams_count (nfo_tvshow_episode_t *ep)
     return 0;
 
   fileinfo = ep->fileinfo;
-  return fileinfo->subs ? ARRAY_SIZE (fileinfo->subs) : 0;
+  return fileinfo->subs ? list_get_length (fileinfo->subs) : 0;
 }
 
 nfo_stream_sub_t *
@@ -346,7 +359,7 @@ nfo_tvshow_episode_get_sub_stream (nfo_tvshow_episode_t *ep, int id)
     return NULL;
 
   fileinfo = ep->fileinfo;
-  max = ARRAY_SIZE (fileinfo->subs);
+  max = list_get_length (fileinfo->subs);
   if (id >= max)
     return NULL;
 
