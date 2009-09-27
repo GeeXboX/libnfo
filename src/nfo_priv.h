@@ -89,6 +89,12 @@ struct nfo_fileinfo_s {
 nfo_fileinfo_t *nfo_fileinfo_new (void);
 void nfo_fileinfo_free (nfo_fileinfo_t *n);
 
+void nfo_fileinfo_add_stream_video (nfo_fileinfo_t *info,
+                                    nfo_stream_video_t *v);
+void nfo_fileinfo_add_stream_audio (nfo_fileinfo_t *info,
+                                    nfo_stream_audio_t *a);
+void nfo_fileinfo_add_stream_sub (nfo_fileinfo_t *info, nfo_stream_sub_t *s);
+
 struct nfo_movie_s {
   char *title;
   char *original_title;
@@ -117,6 +123,7 @@ struct nfo_movie_s {
 
 nfo_movie_t *nfo_movie_new (void);
 void nfo_movie_free (nfo_movie_t *n);
+void nfo_movie_add_actor (nfo_movie_t *movie, nfo_actor_t *actor);
 
 struct nfo_tvshow_s {
   char *title;
@@ -137,6 +144,7 @@ struct nfo_tvshow_s {
 
 nfo_tvshow_t *nfo_tvshow_new (void);
 void nfo_tvshow_free (nfo_tvshow_t *n);
+void nfo_tvshow_add_actor (nfo_tvshow_t *tvshow, nfo_actor_t *actor);
 
 struct nfo_tvshow_episode_s {
   char *title;
@@ -157,6 +165,8 @@ struct nfo_tvshow_episode_s {
 
 nfo_tvshow_episode_t *nfo_tvshow_episode_new (void);
 void nfo_tvshow_episode_free (nfo_tvshow_episode_t *n);
+void nfo_tvshow_episode_add_actor (nfo_tvshow_episode_t *episode,
+                                   nfo_actor_t *actor);
 
 struct nfo_s {
   nfo_type_t type;

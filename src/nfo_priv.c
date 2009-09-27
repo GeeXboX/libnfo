@@ -24,6 +24,21 @@
 #include "nfo.h"
 #include "nfo_priv.h"
 
+static int
+list_get_length (void *list)
+{
+  void **l = list;
+  int n = 0;
+
+  if (!list)
+    return 0;
+
+  while (*(l++))
+    n++;
+
+  return n;
+}
+
 static inline void
 list_free (void *field, void (*fct) (void *p))
 {
@@ -169,6 +184,51 @@ nfo_fileinfo_free (nfo_fileinfo_t *n)
   free (n);
 }
 
+void
+nfo_fileinfo_add_stream_video (nfo_fileinfo_t *info, nfo_stream_video_t *v)
+{
+  int n;
+
+  if (!info || !v)
+    return;
+
+  n = list_get_length ((void *) info->videos) + 1;
+  info->videos = realloc (info->videos,
+                          (n + 1) * sizeof (*(info->videos)));
+  info->videos[n] = NULL;
+  info->videos[n - 1] = v;
+}
+
+void
+nfo_fileinfo_add_stream_audio (nfo_fileinfo_t *info, nfo_stream_audio_t *a)
+{
+  int n;
+
+  if (!info || !a)
+    return;
+
+  n = list_get_length ((void *) info->audios) + 1;
+  info->audios = realloc (info->audios,
+                          (n + 1) * sizeof (*(info->audios)));
+  info->audios[n] = NULL;
+  info->audios[n - 1] = a;
+}
+
+void
+nfo_fileinfo_add_stream_sub (nfo_fileinfo_t *info, nfo_stream_sub_t *s)
+{
+  int n;
+
+  if (!info || !s)
+    return;
+
+  n = list_get_length ((void *) info->subs) + 1;
+  info->subs = realloc (info->subs,
+                        (n + 1) * sizeof (*(info->subs)));
+  info->subs[n] = NULL;
+  info->subs[n - 1] = s;
+}
+
 /* Movie */
 
 nfo_movie_t *
@@ -213,6 +273,21 @@ nfo_movie_free (nfo_movie_t *n)
   free (n);
 }
 
+void
+nfo_movie_add_actor (nfo_movie_t *movie, nfo_actor_t *actor)
+{
+  int n;
+
+  if (!movie || !actor)
+    return;
+
+  n = list_get_length ((void *) movie->actors) + 1;
+  movie->actors = realloc (movie->actors,
+                           (n + 1) * sizeof (*(movie->actors)));
+  movie->actors[n] = NULL;
+  movie->actors[n - 1] = actor;
+}
+
 /* TVShow */
 
 nfo_tvshow_t *
@@ -248,6 +323,21 @@ nfo_tvshow_free (nfo_tvshow_t *n)
   free (n);
 }
 
+void
+nfo_tvshow_add_actor (nfo_tvshow_t *tvshow, nfo_actor_t *actor)
+{
+  int n;
+
+  if (!tvshow || !actor)
+    return;
+
+  n = list_get_length ((void *) tvshow->actors) + 1;
+  tvshow->actors = realloc (tvshow->actors,
+                            (n + 1) * sizeof (*(tvshow->actors)));
+  tvshow->actors[n] = NULL;
+  tvshow->actors[n - 1] = actor;
+}
+
 /* TVShow Episode */
 
 nfo_tvshow_episode_t *
@@ -281,6 +371,22 @@ nfo_tvshow_episode_free (nfo_tvshow_episode_t *n)
   nfo_tvshow_free (n->show);
   list_free (n->actors, nfo_actor_free);
   free (n);
+}
+
+void
+nfo_tvshow_episode_add_actor (nfo_tvshow_episode_t *episode,
+                              nfo_actor_t *actor)
+{
+  int n;
+
+  if (!episode || !actor)
+    return;
+
+  n = list_get_length ((void *) episode->actors) + 1;
+  episode->actors = realloc (episode->actors,
+                             (n + 1) * sizeof (*(episode->actors)));
+  episode->actors[n] = NULL;
+  episode->actors[n - 1] = actor;
 }
 
 nfo_t *
