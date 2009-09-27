@@ -25,15 +25,15 @@
 
 #define PRINT_MOVIE_TAG(str,field)                                      \
   if (nfo_movie_get (movie, field))                                     \
-    printf ("  ##str: %s\n", nfo_movie_get (movie, field))
+    printf ("  %s: %s\n", str, nfo_movie_get (movie, field))
 
 #define PRINT_EPISODE_TAG(str,field)                                    \
   if (nfo_tvshow_episode_get (episode, field))                          \
-    printf ("  ##str: %s\n", nfo_tvshow_episode_get (episode, field))
+    printf ("  %s: %s\n", str, nfo_tvshow_episode_get (episode, field))
 
 #define PRINT_TVSHOW_TAG(str,field)                                     \
   if (nfo_tvshow_get (tvshow, field))                                   \
-    printf ("    ##str: %s\n", nfo_tvshow_get (tvshow, field))
+    printf ("    %s: %s\n", str, nfo_tvshow_get (tvshow, field))
 
 static void
 display_actor (nfo_actor_t *actor)
