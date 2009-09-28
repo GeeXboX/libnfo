@@ -420,6 +420,15 @@ nfo_parse_xml (nfo_t *nfo, const char *filename)
       nfo->movie->fanart = strdup (tbn_file);
     NFREE (tbn_file);
   }
+  else if (nfo->type == NFO_TVSHOW && nfo->tvshow)
+  {
+    char *tbn_file;
+
+    tbn_file = nfo_file_exists (dir, file, "tbn");
+    if (tbn_file)
+      nfo->tvshow->fanart = strdup (tbn_file);
+    NFREE (tbn_file);
+  }
 
   NFREE (dir);
   NFREE (file);
