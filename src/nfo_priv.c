@@ -23,6 +23,7 @@
 
 #include "nfo.h"
 #include "nfo_priv.h"
+#include "nfo_xml_parser.h"
 
 static int
 list_get_length (void *list)
@@ -397,7 +398,7 @@ nfo_init (const char *filename)
   n = calloc (1, sizeof (nfo_t));
   n->type = NFO_UNKNOWN;
 
-  /* TODO: need to parse the files */
+  nfo_parse_xml (n, filename);
 
   return n;
 }
