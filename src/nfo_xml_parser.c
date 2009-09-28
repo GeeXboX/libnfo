@@ -366,6 +366,55 @@ nfo_grab_tvshow_tbn (nfo_tvshow_episode_t *episode,
 }
 
 static void
+nfo_parse_xml_tvshow (nfo_tvshow_episode_t *episode, const char *dir)
+{
+  xmlDocPtr doc;
+  xmlNode *root, *show;
+  nfo_tvshow_t *t;
+  char *f;
+
+  if (!episode || !dir)
+    return;
+
+  f = nfo_file_exists (dir, "../tvshow", "nfo");
+  if (!f)
+    return;
+
+  doc = nfo_get_xml_doc_from_file (f);
+  if (!doc)
+    return;
+
+  root = xmlDocGetRootElement (doc);
+  if (!root)
+    goto episode_err;
+
+  show = nfo_get_node_xml_tree (root, "tvshow");
+  if (!show)
+    goto episode_err;
+
+  t = nfo_tvshow_new ();
+
+  nfo_xml_search_str (show, "title",           &t->title);
+  nfo_xml_search_str (show, "rating",          &t->rating);
+  nfo_xml_search_str (show, "season",          &t->season);
+  nfo_xml_search_str (show, "episode",         &t->episode);
+  nfo_xml_search_str (show, "displayseason",   &t->displayseason);
+  nfo_xml_search_str (show, "displayepisode",  &t->displayepisode);
+  nfo_xml_search_str (show, "episodeguideurl", &t->episode_guide_url);
+  nfo_xml_search_str (show, "plot",            &t->plot);
+  nfo_xml_search_str (show, "mpaa",            &t->mpaa);
+  nfo_xml_search_str (show, "watched",         &t->watched);
+  nfo_xml_search_str (show, "genre",           &t->genre);
+  nfo_xml_search_str (show, "premiered",       &t->premiered);
+  nfo_xml_search_str (show, "studio",          &t->studio);
+
+  episode->show = t;
+
+ episode_err:
+  xmlFreeDoc (doc);
+}
+
+static void
 nfo_parse_xml_episode (nfo_t *nfo, const char *filename,
                        const char *dir, const char *file)
 {
@@ -403,6 +452,7 @@ nfo_parse_xml_episode (nfo_t *nfo, const char *filename,
   nfo_xml_search_str (episode, "votes",     &e->votes);
 
   nfo_episode_parse_xml_actor (e, episode);
+  nfo_parse_xml_tvshow (e, dir);
   nfo_grab_tvshow_tbn (e, dir, file);
 
   nfo->type = NFO_TVSHOW;
