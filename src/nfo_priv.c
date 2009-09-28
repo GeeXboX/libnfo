@@ -40,19 +40,6 @@ list_get_length (void *list)
   return n;
 }
 
-static inline void
-list_free (void *field, void (*fct) (void *p))
-{
-  void **l = NULL;
-
-  *l = field;
-  while (*l)
-  {
-    fct (*l);
-    (void) *l++;
-  }
-}
-
 /* Actors */
 
 nfo_actor_t *
@@ -65,10 +52,8 @@ nfo_actor_new (void)
 }
 
 void
-nfo_actor_free (void *p)
+nfo_actor_free (nfo_actor_t *n)
 {
-  nfo_actor_t *n = p;
-
   if (!n)
     return;
 
@@ -76,6 +61,21 @@ nfo_actor_free (void *p)
   NFREE (n->role);
   NFREE (n->thumb);
   free (n);
+}
+
+static void
+nfo_actor_list_free (nfo_actor_t **actors)
+{
+  int n, i;
+
+  if (!actors)
+    return;
+
+  n = list_get_length (actors) + 1;
+
+  for (i = 0; i < n; i++)
+    nfo_actor_free (actors[i]);
+  free (actors);
 }
 
 /* Video Stream */
@@ -90,10 +90,8 @@ nfo_stream_video_new (void)
 }
 
 void
-nfo_stream_video_free (void *p)
+nfo_stream_video_free (nfo_stream_video_t *n)
 {
-  nfo_stream_video_t *n = p;
-
   if (!n)
     return;
 
@@ -113,6 +111,21 @@ nfo_stream_video_free (void *p)
   free (n);
 }
 
+static void
+nfo_stream_video_list_free (nfo_stream_video_t **videos)
+{
+  int n, i;
+
+  if (!videos)
+    return;
+
+  n = list_get_length (videos) + 1;
+
+  for (i = 0; i < n; i++)
+    nfo_stream_video_free (videos[i]);
+  free (videos);
+}
+
 /* Audio Stream */
 
 nfo_stream_audio_t *
@@ -125,10 +138,8 @@ nfo_stream_audio_new (void)
 }
 
 void
-nfo_stream_audio_free (void *p)
+nfo_stream_audio_free (nfo_stream_audio_t *n)
 {
-  nfo_stream_audio_t *n = p;
-
   if (!n)
     return;
 
@@ -137,6 +148,21 @@ nfo_stream_audio_free (void *p)
   NFREE (n->channels);
   NFREE (n->bitrate);
   free (n);
+}
+
+static void
+nfo_stream_audio_list_free (nfo_stream_audio_t **audios)
+{
+  int n, i;
+
+  if (!audios)
+    return;
+
+  n = list_get_length (audios) + 1;
+
+  for (i = 0; i < n; i++)
+    nfo_stream_audio_free (audios[i]);
+  free (audios);
 }
 
 /* Subtitle Stream */
@@ -151,15 +177,28 @@ nfo_stream_sub_new (void)
 }
 
 void
-nfo_stream_sub_free (void *p)
+nfo_stream_sub_free (nfo_stream_sub_t *n)
 {
-  nfo_stream_sub_t *n = p;
-
   if (!n)
     return;
 
   NFREE (n->lang);
   free (n);
+}
+
+static void
+nfo_stream_sub_list_free (nfo_stream_sub_t **subs)
+{
+  int n, i;
+
+  if (!subs)
+    return;
+
+  n = list_get_length (subs) + 1;
+
+  for (i = 0; i < n; i++)
+    nfo_stream_sub_free (subs[i]);
+  free (subs);
 }
 
 /* FileInfo */
@@ -179,9 +218,9 @@ nfo_fileinfo_free (nfo_fileinfo_t *n)
   if (!n)
     return;
 
-  list_free (n->videos, nfo_stream_video_free);
-  list_free (n->audios, nfo_stream_audio_free);
-  list_free (n->subs, nfo_stream_sub_free);
+  nfo_stream_video_list_free (n->videos);
+  nfo_stream_audio_list_free (n->audios);
+  nfo_stream_sub_list_free (n->subs);
   free (n);
 }
 
@@ -270,7 +309,7 @@ nfo_movie_free (nfo_movie_t *n)
   NFREE (n->studio);
 
   nfo_fileinfo_free (n->fileinfo);
-  list_free (n->actors, nfo_actor_free);
+  nfo_actor_list_free (n->actors);
   free (n);
 }
 
@@ -320,7 +359,7 @@ nfo_tvshow_free (nfo_tvshow_t *n)
   NFREE (n->premiered);
   NFREE (n->studio);
 
-  list_free (n->actors, nfo_actor_free);
+  nfo_actor_list_free (n->actors);
   free (n);
 }
 
@@ -370,7 +409,7 @@ nfo_tvshow_episode_free (nfo_tvshow_episode_t *n)
 
   nfo_fileinfo_free (n->fileinfo);
   nfo_tvshow_free (n->show);
-  list_free (n->actors, nfo_actor_free);
+  nfo_actor_list_free (n->actors);
   free (n);
 }
 

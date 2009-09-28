@@ -42,7 +42,7 @@ struct nfo_actor_s {
 };
 
 nfo_actor_t *nfo_actor_new (void);
-void nfo_actor_free (void *p);
+void nfo_actor_free (nfo_actor_t *n);
 
 struct nfo_stream_video_s {
   char *width;
@@ -61,7 +61,7 @@ struct nfo_stream_video_s {
 };
 
 nfo_stream_video_t *nfo_stream_video_new (void);
-void nfo_stream_video_free (void *p);
+void nfo_stream_video_free (nfo_stream_video_t *n);
 
 struct nfo_stream_audio_s {
   char *lang;
@@ -71,14 +71,14 @@ struct nfo_stream_audio_s {
 };
 
 nfo_stream_audio_t *nfo_stream_audio_new (void);
-void nfo_stream_audio_free (void *p);
+void nfo_stream_audio_free (nfo_stream_audio_t *n);
 
 struct nfo_stream_sub_s {
   char *lang;
 };
 
 nfo_stream_sub_t *nfo_stream_sub_new (void);
-void nfo_stream_sub_free (void *p);
+void nfo_stream_sub_free (nfo_stream_sub_t *n);
 
 struct nfo_fileinfo_s {
   nfo_stream_video_t **videos;
