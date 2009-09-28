@@ -20,6 +20,7 @@ SRCS =  \
 	nfo.c \
 	nfo_priv.c \
 	nfo_xml_utils.c \
+	nfo_xml_parser.c \
 
 OBJS = $(SRCS:.c=.o)
 
