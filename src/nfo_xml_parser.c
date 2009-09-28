@@ -262,7 +262,17 @@ nfo_episode_parse_xml_actor (nfo_tvshow_episode_t *episode, xmlNode *node)
 }
 
 static void
-nfo_parse_xml_movie (nfo_t *nfo, const char *filename)
+nfo_grab_movie_tbn (nfo_movie_t *movie, const char *dir, const char *file)
+{
+  if (!movie || !dir || !file)
+    return;
+
+  movie->fanart = nfo_file_exists (dir, file, "tbn");
+}
+
+static void
+nfo_parse_xml_movie (nfo_t *nfo, const char *filename,
+                     const char *dir, const char *file)
 {
   xmlDocPtr doc;
   xmlNode *root, *movie, *fileinfo;
@@ -307,66 +317,13 @@ nfo_parse_xml_movie (nfo_t *nfo, const char *filename)
   nfo_xml_search_str (movie, "studioreal",    &m->studio);
 
   nfo_movie_parse_xml_actor (m, movie);
+  nfo_grab_movie_tbn (m, dir, file);
 
   nfo->type = NFO_MOVIE;
   nfo->movie = m;
 
  movie_err:
   xmlFreeDoc (doc);
-}
-
-static void
-nfo_parse_xml_episode (nfo_t *nfo, const char *filename)
-{
-  xmlDocPtr doc;
-  xmlNode *root, *episode, *fileinfo;
-  nfo_tvshow_episode_t *e;
-
-  doc = nfo_get_xml_doc_from_file (filename);
-  if (!doc)
-    return;
-
-  root = xmlDocGetRootElement (doc);
-  if (!root)
-    goto episode_err;
-
-  episode = nfo_get_node_xml_tree (root, "episodedetails");
-  if (!episode)
-    goto episode_err;
-
-  e = nfo_tvshow_episode_new ();
-
-  fileinfo = nfo_get_node_xml_tree (episode, "fileinfo");
-  nfo_episode_parse_xml_fileinfo (e, fileinfo);
-
-  nfo_xml_search_str (episode, "title",     &e->title);
-  nfo_xml_search_str (episode, "rating",    &e->rating);
-  nfo_xml_search_str (episode, "season",    &e->season);
-  nfo_xml_search_str (episode, "episode",   &e->episode);
-  nfo_xml_search_str (episode, "plot",      &e->plot);
-  nfo_xml_search_str (episode, "thumb",     &e->thumb);
-  nfo_xml_search_str (episode, "playcount", &e->playcount);
-  nfo_xml_search_str (episode, "credits",   &e->credits);
-  nfo_xml_search_str (episode, "director",  &e->director);
-  nfo_xml_search_str (episode, "aired",     &e->aired);
-  nfo_xml_search_str (episode, "votes",     &e->votes);
-
-  nfo_episode_parse_xml_actor (e, episode);
-
-  nfo->type = NFO_TVSHOW;
-  nfo->tvshow = e;
-
- episode_err:
-  xmlFreeDoc (doc);
-}
-
-static void
-nfo_grab_movie_tbn (nfo_movie_t *movie, const char *dir, const char *file)
-{
-  if (!movie || !dir || !file)
-    return;
-
-  movie->fanart = nfo_file_exists (dir, file, "tbn");
 }
 
 static void
@@ -409,15 +366,50 @@ nfo_grab_tvshow_tbn (nfo_tvshow_episode_t *episode,
 }
 
 static void
-nfo_grab_tbn (nfo_t *nfo, const char *dir, const char *file)
+nfo_parse_xml_episode (nfo_t *nfo, const char *filename,
+                       const char *dir, const char *file)
 {
-  if (!nfo || !dir || !file)
+  xmlDocPtr doc;
+  xmlNode *root, *episode, *fileinfo;
+  nfo_tvshow_episode_t *e;
+
+  doc = nfo_get_xml_doc_from_file (filename);
+  if (!doc)
     return;
 
-  if (nfo->type == NFO_MOVIE && nfo->movie)
-    nfo_grab_movie_tbn (nfo->movie, dir, file);
-  else if (nfo->type == NFO_TVSHOW && nfo->tvshow)
-    nfo_grab_tvshow_tbn (nfo->tvshow, dir, file);
+  root = xmlDocGetRootElement (doc);
+  if (!root)
+    goto episode_err;
+
+  episode = nfo_get_node_xml_tree (root, "episodedetails");
+  if (!episode)
+    goto episode_err;
+
+  e = nfo_tvshow_episode_new ();
+
+  fileinfo = nfo_get_node_xml_tree (episode, "fileinfo");
+  nfo_episode_parse_xml_fileinfo (e, fileinfo);
+
+  nfo_xml_search_str (episode, "title",     &e->title);
+  nfo_xml_search_str (episode, "rating",    &e->rating);
+  nfo_xml_search_str (episode, "season",    &e->season);
+  nfo_xml_search_str (episode, "episode",   &e->episode);
+  nfo_xml_search_str (episode, "plot",      &e->plot);
+  nfo_xml_search_str (episode, "thumb",     &e->thumb);
+  nfo_xml_search_str (episode, "playcount", &e->playcount);
+  nfo_xml_search_str (episode, "credits",   &e->credits);
+  nfo_xml_search_str (episode, "director",  &e->director);
+  nfo_xml_search_str (episode, "aired",     &e->aired);
+  nfo_xml_search_str (episode, "votes",     &e->votes);
+
+  nfo_episode_parse_xml_actor (e, episode);
+  nfo_grab_tvshow_tbn (e, dir, file);
+
+  nfo->type = NFO_TVSHOW;
+  nfo->tvshow = e;
+
+ episode_err:
+  xmlFreeDoc (doc);
 }
 
 void
@@ -445,11 +437,11 @@ nfo_parse_xml (nfo_t *nfo, const char *filename)
   nfo_file = nfo_file_exists (dir, file, "nfo");
   if (nfo_file)
   {
-    nfo_parse_xml_movie (nfo, nfo_file);
+    nfo_parse_xml_movie (nfo, nfo_file, dir, file);
     if (nfo->type == NFO_MOVIE)
       goto nfo_parse_xml_end;
 
-    nfo_parse_xml_episode (nfo, nfo_file);
+    nfo_parse_xml_episode (nfo, nfo_file, dir, file);
     if (nfo->type == NFO_TVSHOW)
       goto nfo_parse_xml_end;
   }
@@ -457,20 +449,18 @@ nfo_parse_xml (nfo_t *nfo, const char *filename)
   nfo_file = nfo_file_exists (dir, "movie", "nfo");
   if (nfo_file)
   {
-    nfo_parse_xml_movie (nfo, nfo_file);
+    nfo_parse_xml_movie (nfo, nfo_file, dir, file);
     goto nfo_parse_xml_end;
   }
 
   nfo_file = nfo_file_exists (dir, "Movie", "nfo");
   if (nfo_file)
   {
-    nfo_parse_xml_movie (nfo, nfo_file);
+    nfo_parse_xml_movie (nfo, nfo_file, dir, file);
     goto nfo_parse_xml_end;
   }
 
  nfo_parse_xml_end:
-  nfo_grab_tbn (nfo, dir, file);
-
   NFREE (dir);
   NFREE (file);
   NFREE (nfo_file);
