@@ -411,6 +411,7 @@ nfo_parse_xml_tvshow (nfo_tvshow_episode_t *episode, const char *dir)
   episode->show = t;
 
  episode_err:
+  NFREE (f);
   xmlFreeDoc (doc);
 }
 
