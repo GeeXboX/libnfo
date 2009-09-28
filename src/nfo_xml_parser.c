@@ -373,10 +373,39 @@ static void
 nfo_grab_tvshow_tbn (nfo_tvshow_episode_t *episode,
                      const char *dir, const char *file)
 {
+  char *s;
+
   if (!episode || !dir || !file)
     return;
 
   episode->fanart = nfo_file_exists (dir, file, "tbn");
+
+  s = strrchr (dir, '/');
+  if (s)
+  {
+    char tbn_season[1024] = { 0 };
+    char *parent_path;
+    int err, season;
+    struct stat st;
+
+    parent_path = strndup (dir, strlen (dir) - strlen (s));
+
+    if (episode->season)
+      season = atoi (episode->season);
+    else /* try to guess from dirname, must be ../tvshow/S[0-9]/episode.. */
+    {
+      char guess[16] = { 0 };
+      snprintf (guess, sizeof (guess), "%s", s + 2);
+      season = atoi (guess);
+    }
+
+    snprintf (tbn_season, sizeof (tbn_season),
+              "%s/season%.2d.tbn", parent_path, season);
+
+    err = stat (tbn_season, &st);
+    episode->fanart_season = !err ? strdup (tbn_season) : NULL;
+    NFREE (parent_path);
+  }
 }
 
 static void
