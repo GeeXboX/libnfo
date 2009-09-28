@@ -360,6 +360,37 @@ nfo_parse_xml_episode (nfo_t *nfo, const char *filename)
   xmlFreeDoc (doc);
 }
 
+static void
+nfo_grab_movie_tbn (nfo_movie_t *movie, const char *dir, const char *file)
+{
+  if (!movie || !dir || !file)
+    return;
+
+  movie->fanart = nfo_file_exists (dir, file, "tbn");
+}
+
+static void
+nfo_grab_tvshow_tbn (nfo_tvshow_episode_t *episode,
+                     const char *dir, const char *file)
+{
+  if (!episode || !dir || !file)
+    return;
+
+  episode->fanart = nfo_file_exists (dir, file, "tbn");
+}
+
+static void
+nfo_grab_tbn (nfo_t *nfo, const char *dir, const char *file)
+{
+  if (!nfo || !dir || !file)
+    return;
+
+  if (nfo->type == NFO_MOVIE && nfo->movie)
+    nfo_grab_movie_tbn (nfo->movie, dir, file);
+  else if (nfo->type == NFO_TVSHOW && nfo->tvshow)
+    nfo_grab_tvshow_tbn (nfo->tvshow, dir, file);
+}
+
 void
 nfo_parse_xml (nfo_t *nfo, const char *filename)
 {
@@ -409,26 +440,7 @@ nfo_parse_xml (nfo_t *nfo, const char *filename)
   }
 
  nfo_parse_xml_end:
-
-  /* FanART: check for tbn file */
-  if (nfo->type == NFO_MOVIE && nfo->movie)
-  {
-    char *tbn_file;
-
-    tbn_file = nfo_file_exists (dir, file, "tbn");
-    if (tbn_file)
-      nfo->movie->fanart = strdup (tbn_file);
-    NFREE (tbn_file);
-  }
-  else if (nfo->type == NFO_TVSHOW && nfo->tvshow)
-  {
-    char *tbn_file;
-
-    tbn_file = nfo_file_exists (dir, file, "tbn");
-    if (tbn_file)
-      nfo->tvshow->fanart = strdup (tbn_file);
-    NFREE (tbn_file);
-  }
+  nfo_grab_tbn (nfo, dir, file);
 
   NFREE (dir);
   NFREE (file);
