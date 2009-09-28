@@ -153,6 +153,8 @@ struct nfo_tvshow_episode_s {
   char *episode;
   char *plot;
   char *thumb;
+  char *fanart;
+  char *fanart_season;
   char *playcount;
   char *credits;
   char *director;

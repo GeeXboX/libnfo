@@ -243,6 +243,10 @@ nfo_tvshow_episode_get (nfo_tvshow_episode_t *ep,
     return ep->plot;
   case NFO_TVSHOW_EPISODE_THUMB:
     return ep->thumb;
+  case NFO_TVSHOW_EPISODE_FANART:
+    return ep->fanart;
+  case NFO_TVSHOW_EPISODE_FANART_SEASON:
+    return ep->fanart_season;
   case NFO_TVSHOW_EPISODE_PLAY_COUNT:
     return ep->playcount;
   case NFO_TVSHOW_EPISODE_CREDITS:

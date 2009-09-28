@@ -401,6 +401,8 @@ nfo_tvshow_episode_free (nfo_tvshow_episode_t *n)
   NFREE (n->episode);
   NFREE (n->plot);
   NFREE (n->thumb);
+  NFREE (n->fanart);
+  NFREE (n->fanart_season);
   NFREE (n->playcount);
   NFREE (n->credits);
   NFREE (n->director);
