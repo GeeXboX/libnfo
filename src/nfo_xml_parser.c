@@ -296,7 +296,6 @@ nfo_parse_xml_movie (nfo_t *nfo, const char *filename)
   nfo_xml_search_str (movie, "tagline",       &m->tagline);
   nfo_xml_search_str (movie, "runtime",       &m->runtime);
   nfo_xml_search_str (movie, "thumb",         &m->thumb);
-  nfo_xml_search_str (movie, "fanart",        &m->fanart);
   nfo_xml_search_str (movie, "mpaa",          &m->mpaa);
   nfo_xml_search_str (movie, "playcount",     &m->playcount);
   nfo_xml_search_str (movie, "watched",       &m->watched);
