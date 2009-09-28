@@ -183,6 +183,27 @@ nfo_movie_parse_xml_fileinfo (nfo_movie_t *movie, xmlNode *n)
 }
 
 static void
+nfo_episode_parse_xml_fileinfo (nfo_tvshow_episode_t *episode, xmlNode *n)
+{
+  nfo_fileinfo_t *fileinfo;
+  xmlNode *sd;
+
+  if (!episode || !n)
+    return;
+
+  sd = nfo_get_node_xml_tree (n, "streamdetails");
+  if (!sd)
+    return;
+
+  fileinfo = nfo_fileinfo_new ();
+  nfo_parse_xml_video (fileinfo, sd);
+  nfo_parse_xml_audio (fileinfo, sd);
+  nfo_parse_xml_sub   (fileinfo, sd);
+
+  episode->fileinfo = fileinfo;
+}
+
+static void
 nfo_movie_parse_xml_actor (nfo_movie_t *movie, xmlNode *node)
 {
   xmlNode *n;
@@ -207,6 +228,35 @@ nfo_movie_parse_xml_actor (nfo_movie_t *movie, xmlNode *node)
     nfo_xml_search_str (n, "thumb", &actor->thumb);
 
     nfo_movie_add_actor (movie, actor);
+    n = n->next;
+  }
+}
+
+static void
+nfo_episode_parse_xml_actor (nfo_tvshow_episode_t *episode, xmlNode *node)
+{
+  xmlNode *n;
+
+  if (!episode || !node)
+    return;
+
+  n = nfo_get_node_xml_tree (node, "actor");
+  while (n)
+  {
+    nfo_actor_t *actor;
+
+    if (strcmp ((const char *) n->name, "actor"))
+    {
+      n = n->next;
+      continue;
+    }
+
+    actor = nfo_actor_new ();
+    nfo_xml_search_str (n, "name",  &actor->name);
+    nfo_xml_search_str (n, "role",  &actor->role);
+    nfo_xml_search_str (n, "thumb", &actor->thumb);
+
+    nfo_tvshow_episode_add_actor (episode, actor);
     n = n->next;
   }
 }
@@ -266,6 +316,51 @@ nfo_parse_xml_movie (nfo_t *nfo, const char *filename)
   xmlFreeDoc (doc);
 }
 
+static void
+nfo_parse_xml_episode (nfo_t *nfo, const char *filename)
+{
+  xmlDocPtr doc;
+  xmlNode *root, *episode, *fileinfo;
+  nfo_tvshow_episode_t *e;
+
+  doc = nfo_get_xml_doc_from_file (filename);
+  if (!doc)
+    return;
+
+  root = xmlDocGetRootElement (doc);
+  if (!root)
+    goto episode_err;
+
+  episode = nfo_get_node_xml_tree (root, "episodedetails");
+  if (!episode)
+    goto episode_err;
+
+  e = nfo_tvshow_episode_new ();
+
+  fileinfo = nfo_get_node_xml_tree (episode, "fileinfo");
+  nfo_episode_parse_xml_fileinfo (e, fileinfo);
+
+  nfo_xml_search_str (episode, "title",     &e->title);
+  nfo_xml_search_str (episode, "rating",    &e->rating);
+  nfo_xml_search_str (episode, "season",    &e->season);
+  nfo_xml_search_str (episode, "episode",   &e->episode);
+  nfo_xml_search_str (episode, "plot",      &e->plot);
+  nfo_xml_search_str (episode, "thumb",     &e->thumb);
+  nfo_xml_search_str (episode, "playcount", &e->playcount);
+  nfo_xml_search_str (episode, "credits",   &e->credits);
+  nfo_xml_search_str (episode, "director",  &e->director);
+  nfo_xml_search_str (episode, "aired",     &e->aired);
+  nfo_xml_search_str (episode, "votes",     &e->votes);
+
+  nfo_episode_parse_xml_actor (e, episode);
+
+  nfo->type = NFO_TVSHOW;
+  nfo->tvshow = e;
+
+ episode_err:
+  xmlFreeDoc (doc);
+}
+
 void
 nfo_parse_xml (nfo_t *nfo, const char *filename)
 {
@@ -292,7 +387,12 @@ nfo_parse_xml (nfo_t *nfo, const char *filename)
   if (nfo_file)
   {
     nfo_parse_xml_movie (nfo, nfo_file);
-    goto nfo_parse_xml_end;
+    if (nfo->type == NFO_MOVIE)
+      goto nfo_parse_xml_end;
+
+    nfo_parse_xml_episode (nfo, nfo_file);
+    if (nfo->type == NFO_TVSHOW)
+      goto nfo_parse_xml_end;
   }
 
   nfo_file = nfo_file_exists (dir, "movie", "nfo");
