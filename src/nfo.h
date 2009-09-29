@@ -152,6 +152,9 @@ typedef enum nfo_tvshow_field_s {
   NFO_TVSHOW_GENRE,
   NFO_TVSHOW_PREMIERED,
   NFO_TVSHOW_STUDIO,
+  NFO_TVSHOW_FANART,
+  NFO_TVSHOW_FANART_HEADER,
+  NFO_TVSHOW_FANART_COVER,
 } nfo_tvshow_field_t;
 
 typedef enum nfo_tvshow_episode_field_s {

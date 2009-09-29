@@ -139,6 +139,9 @@ struct nfo_tvshow_s {
   char *genre;
   char *premiered;
   char *studio;
+  char *fanart;
+  char *fanart_header;
+  char *fanart_cover;
   nfo_actor_t **actors;
 };
 

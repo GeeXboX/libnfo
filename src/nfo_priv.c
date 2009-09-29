@@ -358,6 +358,9 @@ nfo_tvshow_free (nfo_tvshow_t *n)
   NFREE (n->genre);
   NFREE (n->premiered);
   NFREE (n->studio);
+  NFREE (n->fanart);
+  NFREE (n->fanart_header);
+  NFREE (n->fanart_cover);
 
   nfo_actor_list_free (n->actors);
   free (n);

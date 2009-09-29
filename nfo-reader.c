@@ -215,6 +215,9 @@ display_show (nfo_tvshow_t *tvshow)
   PRINT_TVSHOW_TAG ("Genre",          NFO_TVSHOW_GENRE);
   PRINT_TVSHOW_TAG ("Premiered",      NFO_TVSHOW_PREMIERED);
   PRINT_TVSHOW_TAG ("Studio",         NFO_TVSHOW_STUDIO);
+  PRINT_TVSHOW_TAG ("Fan Art",        NFO_TVSHOW_FANART);
+  PRINT_TVSHOW_TAG ("Fan Art Header", NFO_TVSHOW_FANART_HEADER);
+  PRINT_TVSHOW_TAG ("Fan Art Cover",  NFO_TVSHOW_FANART_COVER);
 }
 
 static void

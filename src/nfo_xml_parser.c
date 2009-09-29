@@ -361,6 +361,28 @@ nfo_grab_tvshow_tbn (nfo_tvshow_episode_t *episode,
 
     err = stat (tbn_season, &st);
     episode->fanart_season = !err ? strdup (tbn_season) : NULL;
+
+    if (episode->show)
+    {
+      char tbn[1024] = { 0 };
+      nfo_tvshow_t *show = episode->show;
+
+      memset (tbn, sizeof (tbn), '\0');
+      snprintf (tbn, sizeof (tbn), "%s/fanart.jpg", parent_path);
+      err = stat (tbn, &st);
+      show->fanart = !err ? strdup (tbn) : NULL;
+
+      memset (tbn, sizeof (tbn), '\0');
+      snprintf (tbn, sizeof (tbn), "%s/folder.jpg", parent_path);
+      err = stat (tbn, &st);
+      show->fanart_header = !err ? strdup (tbn) : NULL;
+
+      memset (tbn, sizeof (tbn), '\0');
+      snprintf (tbn, sizeof (tbn), "%s/season-all.tbn", parent_path);
+      err = stat (tbn, &st);
+      show->fanart_cover = !err ? strdup (tbn) : NULL;
+    }
+
     NFREE (parent_path);
   }
 }

@@ -410,7 +410,13 @@ nfo_tvshow_get (nfo_tvshow_t *ep, nfo_tvshow_field_t f)
     return ep->premiered;
   case NFO_TVSHOW_STUDIO:
     return ep->studio;
-    }
+  case NFO_TVSHOW_FANART:
+    return ep->fanart;
+  case NFO_TVSHOW_FANART_HEADER:
+    return ep->fanart_header;
+  case NFO_TVSHOW_FANART_COVER:
+    return ep->fanart_cover;
+  }
 
   return NULL;
 }
