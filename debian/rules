@@ -1,0 +1,19 @@
+#!/usr/bin/make -f
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/makefile.mk
+
+DEB_DH_INSTALL_SOURCEDIR  := debian/tmp
+
+# make targets
+DEB_MAKE_CLEAN_TARGET     := distclean
+DEB_MAKE_INSTALL_TARGET   := install DESTDIR=$(DEB_DESTDIR)
+
+# Common configuration flags
+confflags += --prefix=/usr
+confflags += --enable-static
+confflags += --enable-shared
+confflags += --disable-debug
+
+configure/libnfo configure/libnfo-dev configure/libnfo-bin::
+	[ -f config.mak ] || ./configure $(confflags)

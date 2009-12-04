@@ -1,0 +1,35 @@
+Source: libnfo
+Section: libs
+Priority: optional
+Maintainer: Benjamin Zores <ben@geexbox.org>
+Standards-Version: 3.8.1
+Vcs-Hg: http://hg.geexbox.org/libnfo
+Vcs-Browser: http://hg.geexbox.org/libnfo/summary
+Homepage: http://libnfo.geexbox.org/
+Build-Depends-Indep: doxygen
+Build-Depends: debhelper (>= 6), cdbs, pkg-config, libxml2-dev
+
+Package: libnfo
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: an NFO file parser/writer library
+ libNFO is a small library to parse and write NFO files.
+ .
+ NFO files are used to store metadata information on many multimedia files.
+ It is used by both Enna and XBMC Media Center.
+ See http://xbmc.org/wiki/?title=Import_-_Export_Library
+ for a format definition.
+
+Package: libnfo-dev
+Section: libdevel
+Architecture: any
+Depends: libnfo (= ${binary:Version}), libxml2-dev
+Description: an NFO file parser/writer library
+ This package contains devel content
+
+Package: libnfo-bin
+Architecture: any
+Depends: libnfo (= ${binary:Version}), ${shlibs:Depends}
+Description: an NFO file parser/writer library
+ This package contains nfo-reader
