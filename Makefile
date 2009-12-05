@@ -6,8 +6,8 @@ include config.mak
 PKGCONFIG_DIR = $(libdir)/pkgconfig
 PKGCONFIG_FILE = libnfo.pc
 
-NFO_READER      = nfo-reader
-NFO_READER_SRCS = nfo-reader.c
+NFO_READER      = libnfo-reader
+NFO_READER_SRCS = libnfo-reader.c
 
 CFLAGS += -Isrc
 LDFLAGS += -Lsrc -lnfo

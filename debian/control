@@ -32,4 +32,4 @@ Package: libnfo-bin
 Architecture: any
 Depends: libnfo (= ${binary:Version}), ${shlibs:Depends}
 Description: an NFO file parser/writer library
- This package contains nfo-reader
+ This package contains libnfo-reader
