@@ -51,22 +51,32 @@ distclean: clean docs-clean
 	rm -f config.mak
 	rm -f $(PKGCONFIG_FILE)
 
-install: install-pkgconfig install-docs
+install: install-lib install-pkgconfig install-$(NFO_READER) install-docs
+
+install-lib: lib
 	$(MAKE) -C src install
+
+install-pkgconfig: $(PKGCONFIG_FILE)
+	$(INSTALL) -d "$(PKGCONFIG_DIR)"
+	$(INSTALL) -m 644 $< "$(PKGCONFIG_DIR)"
+
+install-$(NFO_READER): $(NFO_READER)
 	$(INSTALL) -d $(bindir)
 	$(INSTALL) -c -m 755 $(NFO_READER) $(bindir)
 
 install-docs: docs
 	$(MAKE) -C DOCS install
 
-install-pkgconfig: $(PKGCONFIG_FILE)
-	$(INSTALL) -d "$(PKGCONFIG_DIR)"
-	$(INSTALL) -m 644 $< "$(PKGCONFIG_DIR)"
+uninstall: uninstall-lib uninstall-pkgconfig uninstall-$(NFO_READER) uninstall-docs
 
-uninstall: uninstall-docs
+uninstall-lib:
 	$(MAKE) -C src uninstall
-	rm -f $(bindir)/$(NFO_READER)
+
+uninstall-pkgconfig:
 	rm -f $(PKGCONFIG_DIR)/$(PKGCONFIG_FILE)
+
+uninstall-$(NFO_READER):
+	rm -f $(bindir)/$(NFO_READER)
 
 uninstall-docs:
 	$(MAKE) -C DOCS uninstall
