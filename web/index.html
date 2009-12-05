@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+  <!--
+      This web site is (c) 2009 Zores Benjamin
+      HomePage for the libnfo, an NFO file parser/writer library. (http://libnfo.geexbox.org/)
+      Feel free to get inspiration from this site, as long as you leave this comment here.
+    -->
+  <head>
+    <title>GeeXboX libnfo HomePage</title>
+    <meta http-equiv="Content-language" content="en"/>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=ISO-8859-1"/>
+    <meta name="description" content="GeeXboX libnfo Homepage : an NFO file parser/writer library"/>
+
+    <meta name="dc.description" content="GeeXboX libnfo Homepage : an NFO file parser/writer library"/>
+    <meta name="dc.subject" content="GeeXboX libnfo Homepage : an NFO file parser/writer library"/>
+    <meta name="dc.title" content="GeeXboX libnfo Homepage"/>
+    <meta name="author" content="Benjamin Zores"/>
+    <meta name="robots" content="index, follow"/>
+    <meta name="keywords" content="Linux, multimedia, HTPC, nfo, movie, audio, video, media, free, software, open, source, API, library, XBMC, libnfo, geexbox, geexbox.org"/>
+    <style type="text/css">
+      body { margin: 10px; padding: 0; font : 0.8em Verdana,Arial,Helvetica,sans-serif; }
+      pre { font-size : 1.1em; background-color: rgb(220, 220, 220); padding: 2ex 6ex; border: 1px solid #ccc;}
+      h1 { text-align: center; margin-bottom: 2em; }
+      h2 { margin-top: 1em; border-bottom: 2px solid #ccc; }
+      h3 { }
+      dl.list { margin-left: 2em; }
+      dt { font-weight: bold; }
+      dd { margin-bottom: 1ex; }
+      li { list-style-type: square; }
+    </style>
+  </head>
+  <body>
+    <h1>
+      <tt>GeeXboX libnfo</tt><br/>
+      An NFO file parser/writer library.
+    </h1>
+
+    <h2>Introduction</h2>
+    <p>
+      libnfo is a small library used to parse and write NFO files.
+      <br/>
+      NFO files are used to store metadata information on many multimedia files.<br/>
+      <br/>
+      The NFO file format is used by (at least) <a href="http://enna.geexbox.org/">Enna</a> and <a href="http://www.xbmc.org/">XBMC</a> Media Centers.<br/>
+      See <a href="http://xbmc.org/wiki/?title=Import_-_Export_Library">there</a> for a (complete) format definition.<br/>
+      <br/>
+      libnfo is free software - it is licensed under the terms of the <a href="http://www.gnu.org/copyleft/lgpl.html">GNU Lesser General Public License</a> (LGPL).
+    </p>
+
+    <h2>Latest News</h2>
+    <div>
+      libnfo is work in progress right now. Only NFO file parsing is supported (writing/editing should be pretty easy but yet to be done). If you're interested in its development, you're highly welcomed to join in.<br/>
+      <br/>
+      Current release is 1.0.0, featuring with the following changes:
+      <ul>
+	<li>Initial project release</li>
+	<li>Video (including TVShows) NFO file parsing.</li>
+      </ul>
+    </div>
+
+    <h2>Copyright and License</h2>
+    <div>
+      libnfo is copyright (C) 2009 Benjamin Zores.<br/>
+      <br/>
+      This program is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.<br/>
+      <br/>
+      This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.<br/>
+      <br/>
+      You should have received a copy of the GNU Lesser General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+    </div>
+
+    <h2>Download</h2>
+    <p>
+      The currently available libnfo release is 1.0.0.<br/>
+      Sources can be downloaded <a href="http://libnfo.geexbox.org/releases/libnfo-1.0.0.tar.bz2">here</a>.
+    </p>
+    <dl>
+      <dt>Ubuntu Packages</dt>
+      <dd>
+      If you're using Ubuntu 9.10 (Karmic) GNU/Linux distribution, libnfo packages are available through your packet manager for your i386 and amd64 architectures.<br/>
+      <br/>
+      Simply add the following line to your <i>/etc/apt/sources.list</i> file :
+      <pre class="code">deb http://packages.geexbox.org/ karmic main</pre>
+      and install libnfo with :
+      <pre class="code">aptitude update &amp;&amp; aptitude install libnfo</pre>
+      </dd>
+
+      <dt>Development Tree</dt>
+      <dd>
+      The latest libnfo development tree can be grabbed using <a href="http://www.selenic.com/mercurial/">Mercurial</a>, a revision control system, similar in purpose to tools such as CVS, SCCS, and Subversion. It is used to keep track of the changes made to a source tree and to help programmers combine and otherwise manipulate changes made by multiple people or at different times.<br/>
+      <br/>
+      There are currently 2 ways of accessing the Mercurial tree: via command-line or web interface (to just have a look to some changes on a specific file, for example). You can directly access to the web interface with your browser from:<br/>
+      <br/>
+      <a href="http://hg.geexbox.org/libnfo/">libnfo Mercurial</a><br/>
+      <br/>
+      In order to access to Mercurial via command line, create and enter a new directory and do the following (be sure that you have installed the mercurial package).<br/>
+      <ul>
+        <li>To get a local copy of the libnfo Mercurial repository :
+          <pre class="code">hg clone http://hg.geexbox.org/libnfo</pre>
+        </li>
+        <li>To update your local copy of the Mercurial, synchronizing with our server :
+          <pre class="code">hg pull -u</pre>
+        </li>
+      </ul>
+      </dd>
+    </dl>
+
+    <h2>Feedback</h2>
+    <p>
+      Please send bug reports, suggestions, ideas, comments or patches to: <a href="mailto:devel@geexbox.org">devel@geexbox.org</a>.
+    </p>
+  </body>
+</html>
