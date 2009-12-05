@@ -303,6 +303,9 @@ main (int argc, char **argv)
   nfo_type_t type;
   nfo_t *nfo;
 
+  if (argc < 2)
+    return 1;
+
   filename = argv[1];
   if (!filename)
     return 1;
