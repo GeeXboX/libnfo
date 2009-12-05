@@ -39,9 +39,9 @@ extern "C" {
 #define NFO_VERSION_DOT(a, b, c) a ##.## b ##.## c
 #define NFO_VERSION(a, b, c) NFO_VERSION_DOT(a, b, c)
 
-#define LIBNFO_VERSION_MAJOR  0
+#define LIBNFO_VERSION_MAJOR  1
 #define LIBNFO_VERSION_MINOR  0
-#define LIBNFO_VERSION_MICRO  1
+#define LIBNFO_VERSION_MICRO  0
 
 #define LIBNFO_VERSION_INT NFO_VERSION_INT(LIBNFO_VERSION_MAJOR, \
                                                LIBNFO_VERSION_MINOR, \
