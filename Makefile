@@ -16,13 +16,7 @@ ifeq ($(BUILD_STATIC),yes)
   LDFLAGS += $(EXTRALIBS)
 endif
 
-DOXYGEN =
-
-ifeq ($(DOC),yes)
-  DOXYGEN = doxygen
-endif
-
-all: lib $(NFO_READER) $(DOXYGEN)
+all: lib $(NFO_READER) docs
 
 lib:
 	$(MAKE) -C src
@@ -30,35 +24,41 @@ lib:
 $(NFO_READER): lib
 	$(CC) $(NFO_READER_SRCS) $(OPTFLAGS) $(CFLAGS) $(EXTRACFLAGS) $(LDFLAGS) -o $(NFO_READER)
 
-doxygen:
-ifeq (,$(wildcard DOCS/doxygen))
-	PROJECT_NUMBER="$(VERSION)" doxygen DOCS/Doxyfile
-endif
+docs:
+	$(MAKE) -C DOCS
+
+docs-clean:
+	$(MAKE) -C DOCS clean
 
 clean:
 	$(MAKE) -C src clean
 	rm -f $(NFO_READER)
 
-distclean: clean
+distclean: clean docs-clean
 	rm -f config.log
 	rm -f config.mak
 	rm -f $(PKGCONFIG_FILE)
-	rm -rf DOCS/doxygen
 
-install: install-pkgconfig
+install: install-pkgconfig install-docs
 	$(MAKE) -C src install
 	$(INSTALL) -d $(bindir)
 	$(INSTALL) -c -m 755 $(NFO_READER) $(bindir)
+
+install-docs: docs
+	$(MAKE) -C DOCS install
 
 install-pkgconfig: $(PKGCONFIG_FILE)
 	$(INSTALL) -d "$(PKGCONFIG_DIR)"
 	$(INSTALL) -m 644 $< "$(PKGCONFIG_DIR)"
 
-uninstall:
+uninstall: uninstall-docs
 	$(MAKE) -C src uninstall
 	rm -f $(bindir)/$(NFO_READER)
 	rm -f $(PKGCONFIG_DIR)/$(PKGCONFIG_FILE)
 
+uninstall-docs:
+	$(MAKE) -C DOCS uninstall
+
 .PHONY: clean distclean
-.PHONY: install install-pkgconfig uninstall
-.PHONY: doxygen
+.PHONY: *install*
+.PHONY: docs
