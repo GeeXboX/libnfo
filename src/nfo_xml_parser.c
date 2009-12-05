@@ -488,7 +488,7 @@ nfo_parse_xml_episode (nfo_t *nfo, const char *filename,
 void
 nfo_parse_xml (nfo_t *nfo, const char *filename)
 {
-  char *s, *dir, *file, *nfo_file;
+  char *s, *dir = NULL, *file = NULL, *nfo_file = NULL;
 
   if (!nfo || !filename)
     return;
