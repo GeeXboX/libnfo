@@ -1,5 +1,5 @@
-libnfo (0.0.1) karmic; urgency=low
+libnfo (1.0.0) karmic; urgency=low
 
-  * initial release.
+  * Initial project release.
 
- -- Benjamin Zores <ben@geexbox.org>  Fri, 4 Dec 2009 21:00:00 +0200
+ -- Benjamin Zores <ben@geexbox.org>  Sat, 5 Dec 2009 19:35:00 +0200
