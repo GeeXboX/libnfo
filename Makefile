@@ -16,6 +16,18 @@ ifeq ($(BUILD_STATIC),yes)
   LDFLAGS += $(EXTRALIBS)
 endif
 
+DISTFILE = libnfo-$(VERSION).tar.bz2
+
+EXTRADIST = \
+	AUTHORS \
+	configure \
+	COPYING \
+	README \
+
+SUBDIRS = \
+	DOCS \
+	src \
+
 all: lib $(NFO_READER) docs
 
 lib:
@@ -62,3 +74,18 @@ uninstall-docs:
 .PHONY: clean distclean
 .PHONY: *install*
 .PHONY: docs
+
+dist:
+	-$(RM) $(DISTFILE)
+	dist=$(shell pwd)/libnfo-$(VERSION) && \
+	for subdir in . $(SUBDIRS); do \
+		mkdir -p "$$dist/$$subdir"; \
+		$(MAKE) -C $$subdir dist-all DIST="$$dist/$$subdir"; \
+	done && \
+	tar cjf $(DISTFILE) libnfo-$(VERSION)
+	-$(RM) -rf libnfo-$(VERSION)
+
+dist-all:
+	cp $(EXTRADIST) $(NFO_READER_SRCS) Makefile $(DIST)
+
+.PHONY: dist dist-all

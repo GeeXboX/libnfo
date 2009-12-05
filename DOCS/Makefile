@@ -3,6 +3,12 @@ $(error "../config.mak is not present, run configure !")
 endif
 include ../config.mak
 
+EXTRADIST = \
+	Doxyfile \
+	movies.nfo.sample \
+	musicvideo.nfo.sample \
+	tvshow.nfo.sample \
+
 all: doxygen
 
 doxygen:
@@ -26,4 +32,7 @@ endif
 uninstall:
 	rm -rf $(docdir)/libnfo
 
-.PHONY: clean doxygen *install
+dist-all:
+	cp $(EXTRADIST) Makefile $(DIST)
+
+.PHONY: clean dist-all doxygen *install

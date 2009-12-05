@@ -22,6 +22,12 @@ SRCS =  \
 	nfo_xml_utils.c \
 	nfo_xml_parser.c \
 
+EXTRADIST = \
+	nfo.h \
+	nfo_priv.h \
+	nfo_xml_parser.h \
+	nfo_xml_utils.h \
+
 OBJS = $(SRCS:.c=.o)
 
 .SUFFIXES: .c .o
@@ -66,6 +72,11 @@ depend:
 
 .PHONY: clean depend
 .PHONY: uninstall
+
+dist-all:
+	cp $(EXTRADIST) $(SRCS) Makefile $(DIST)
+
+.PHONY: dist-all
 
 #
 # include dependency files if they exist
