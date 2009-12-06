@@ -20,6 +20,7 @@ DISTFILE = libnfo-$(VERSION).tar.bz2
 
 EXTRADIST = \
 	AUTHORS \
+	ChangeLog \
 	configure \
 	COPYING \
 	README \
