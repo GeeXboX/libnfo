@@ -35,12 +35,30 @@
 
   </head>
   <body>
-    <h1>
+    <div id="page">
+
+    <h1 id="top" style="text-align: center">
       <tt>GeeXboX libnfo</tt><br/>
       An NFO file parser/writer library.
     </h1>
 
-    <h2>Introduction</h2>
+    <fieldset id="contents">
+      <legend>Contents</legend>
+      <ul>
+        <li><a href="#Introduction">Introduction</a></li>
+        <li><a href="#Latest_News">Latest News</a></li>
+        <li><a href="#Copyright_and_License">Copyright and License</a></li>
+        <li><a href="#Download">Download</a></li>
+        <li><a href="#Feedback">Feedback</a></li>
+      </ul>
+    </fieldset>
+
+    <!-- Introduction -->
+    <div id="content">
+    <h2 id="Introduction">
+      <span class="top"><a href="#top">top</a></span>
+      Introduction
+    </h2>
     <p>
       libnfo is a small library used to parse and write NFO files.
       <br/>
@@ -52,8 +70,12 @@
       libnfo is free software - it is licensed under the terms of the <a href="http://www.gnu.org/copyleft/lgpl.html">GNU Lesser General Public License</a> (LGPL).
     </p>
 
-    <h2>Latest News</h2>
-    <div>
+    <!-- Latest News -->
+    <h2 id="Latest_News">
+      <span class="top"><a href="#top">top</a></span>
+      Latest News
+    </h2>
+    <p>
       libnfo is work in progress right now. Only NFO file parsing is supported (writing/editing should be pretty easy but yet to be done). If you're interested in its development, you're highly welcomed to join in.<br/>
       <br/>
       Current release is 1.0.0, featuring with the following changes:
@@ -61,10 +83,14 @@
 	<li>Initial project release</li>
 	<li>Video (including TVShows) NFO file parsing.</li>
       </ul>
-    </div>
+    </p>
 
-    <h2>Copyright and License</h2>
-    <div>
+    <!-- Copyright and License -->
+    <h2 id="Copyright_and_License">
+      <span class="top"><a href="#top">top</a></span>
+      Copyright and License
+    </h2>
+    <p>
       libnfo is copyright (C) 2009 Benjamin Zores.<br/>
       <br/>
       This program is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.<br/>
@@ -72,26 +98,29 @@
       This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.<br/>
       <br/>
       You should have received a copy of the GNU Lesser General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-    </div>
+    </p>
 
-    <h2>Download</h2>
+    <!-- Download -->
+    <h2 id="Download">
+      <span class="top"><a href="#top">top</a></span>
+      Download
+    </h2>
     <p>
       The currently available libnfo release is 1.0.0.<br/>
       Sources can be downloaded <a href="http://libnfo.geexbox.org/releases/libnfo-1.0.0.tar.bz2">here</a>.
     </p>
-    <dl>
-      <dt>Ubuntu Packages</dt>
-      <dd>
-      If you're using Ubuntu 9.10 (Karmic) GNU/Linux distribution, libnfo packages are available through your packet manager for your i386 and amd64 architectures.<br/>
-      <br/>
-      Simply add the following line to your <i>/etc/apt/sources.list</i> file :
-      <pre class="code">deb http://packages.geexbox.org/ karmic main</pre>
-      and install libnfo with :
-      <pre class="code">aptitude update &amp;&amp; aptitude install libnfo</pre>
-      </dd>
 
-      <dt>Development Tree</dt>
-      <dd>
+      <h3>Ubuntu Packages</h3>
+      <p>
+      If you're using Ubuntu 9.10 (Karmic) GNU/Linux distribution, libnfo packages are available through your packet manager for your i386 and amd64 architectures.<br/>
+      </p>
+      <p>Simply add the following line to your <i>/etc/apt/sources.list</i> file :</p>
+      <pre class="code">deb http://packages.geexbox.org/ karmic main</pre>
+      <p>and install libnfo with :</p>
+      <pre class="code">aptitude update &amp;&amp; aptitude install libnfo</pre>
+
+      <h3>Development Tree</h3>
+      <p>
       The latest libnfo development tree can be grabbed using <a href="http://www.selenic.com/mercurial/">Mercurial</a>, a revision control system, similar in purpose to tools such as CVS, SCCS, and Subversion. It is used to keep track of the changes made to a source tree and to help programmers combine and otherwise manipulate changes made by multiple people or at different times.<br/>
       <br/>
       There are currently 2 ways of accessing the Mercurial tree: via command-line or web interface (to just have a look to some changes on a specific file, for example). You can directly access to the web interface with your browser from:<br/>
@@ -107,10 +136,13 @@
           <pre class="code">hg pull -u</pre>
         </li>
       </ul>
-      </dd>
-    </dl>
+      </p>
 
-    <h2>Feedback</h2>
+    <!-- Feedback -->
+    <h2 id="Feedback">
+      <span class="top"><a href="#top">top</a></span>
+      Feedback
+    </h2>
     <p>
       The author of libnfo and this document, <i>Benjamin Zores</i>,
       can be contacted by <a href="mailto:ben@geexbox.org">e-mail</a>.
