@@ -32,7 +32,7 @@ SUBDIRS = \
 
 .SUFFIXES: .c .o
 
-all: lib test docs
+all: lib apps docs
 
 .c.o:
 	$(CC) -c $(CFLAGS) $(EXTRACFLAGS) $(OPTFLAGS) -o $@ $<
@@ -43,10 +43,10 @@ lib:
 $(NFO_READER): $(NFO_READER_OBJS)
 	$(CC) $(NFO_READER_OBJS) $(LDFLAGS) -o $(NFO_READER)
 
-test-dep:
+apps-dep:
 	$(CC) -MM $(CFLAGS) $(EXTRACFLAGS) $(NFO_READER_SRCS) 1>.depend
 
-test: test-dep lib
+apps: apps-dep lib
 	$(MAKE) $(NFO_READER)
 
 docs:
@@ -76,7 +76,7 @@ install-pkgconfig: $(PKGCONFIG_FILE)
 	$(INSTALL) -d "$(PKGCONFIG_DIR)"
 	$(INSTALL) -m 644 $< "$(PKGCONFIG_DIR)"
 
-install-$(NFO_READER): test
+install-$(NFO_READER): apps
 	$(INSTALL) -d $(bindir)
 	$(INSTALL) -c -m 755 $(NFO_READER) $(bindir)
 
@@ -97,7 +97,7 @@ uninstall-$(NFO_READER):
 uninstall-docs:
 	$(MAKE) -C DOCS uninstall
 
-.PHONY: *clean *install* docs test*
+.PHONY: *clean *install* docs apps*
 
 dist:
 	-$(RM) $(DISTFILE)
