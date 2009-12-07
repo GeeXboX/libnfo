@@ -67,7 +67,7 @@ distclean: clean docs-clean
 	rm -f $(DISTFILE)
 	rm -f $(PKGCONFIG_FILE)
 
-install: install-lib install-pkgconfig install-$(NFO_READER) install-docs
+install: install-lib install-pkgconfig install-apps install-docs
 
 install-lib: lib
 	$(MAKE) -C src install
@@ -76,14 +76,14 @@ install-pkgconfig: $(PKGCONFIG_FILE)
 	$(INSTALL) -d "$(PKGCONFIG_DIR)"
 	$(INSTALL) -m 644 $< "$(PKGCONFIG_DIR)"
 
-install-$(NFO_READER): apps
+install-apps: apps
 	$(INSTALL) -d $(bindir)
 	$(INSTALL) -c -m 755 $(NFO_READER) $(bindir)
 
 install-docs: docs
 	$(MAKE) -C DOCS install
 
-uninstall: uninstall-lib uninstall-pkgconfig uninstall-$(NFO_READER) uninstall-docs
+uninstall: uninstall-lib uninstall-pkgconfig uninstall-apps uninstall-docs
 
 uninstall-lib:
 	$(MAKE) -C src uninstall
@@ -91,7 +91,7 @@ uninstall-lib:
 uninstall-pkgconfig:
 	rm -f $(PKGCONFIG_DIR)/$(PKGCONFIG_FILE)
 
-uninstall-$(NFO_READER):
+uninstall-apps:
 	rm -f $(bindir)/$(NFO_READER)
 
 uninstall-docs:
