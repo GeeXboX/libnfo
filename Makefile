@@ -10,8 +10,8 @@ NFO_READER      = libnfo-reader
 NFO_READER_SRCS = libnfo-reader.c
 NFO_READER_OBJS = $(NFO_READER_SRCS:.c=.o)
 
-CFLAGS += -Isrc
-LDFLAGS += -Lsrc -lnfo
+override CFLAGS += -Isrc
+override LDFLAGS += -Lsrc -lnfo
 
 ifeq ($(BUILD_STATIC),yes)
   LDFLAGS += $(EXTRALIBS)
