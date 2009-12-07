@@ -8,6 +8,7 @@ PKGCONFIG_FILE = libnfo.pc
 
 NFO_READER      = libnfo-reader
 NFO_READER_SRCS = libnfo-reader.c
+NFO_READER_OBJS = $(NFO_READER_SRCS:.c=.o)
 
 CFLAGS += -Isrc
 LDFLAGS += -Lsrc -lnfo
@@ -29,13 +30,24 @@ SUBDIRS = \
 	DOCS \
 	src \
 
-all: lib $(NFO_READER) docs
+.SUFFIXES: .c .o
+
+all: lib test docs
+
+.c.o:
+	$(CC) -c $(CFLAGS) $(EXTRACFLAGS) $(OPTFLAGS) -o $@ $<
 
 lib:
 	$(MAKE) -C src
 
-$(NFO_READER): lib
-	$(CC) $(NFO_READER_SRCS) $(OPTFLAGS) $(CFLAGS) $(EXTRACFLAGS) $(LDFLAGS) -o $(NFO_READER)
+$(NFO_READER): $(NFO_READER_OBJS)
+	$(CC) $(NFO_READER_OBJS) $(LDFLAGS) -o $(NFO_READER)
+
+test-dep:
+	$(CC) -MM $(CFLAGS) $(EXTRACFLAGS) $(NFO_READER_SRCS) 1>.depend
+
+test: test-dep lib
+	$(MAKE) $(NFO_READER)
 
 docs:
 	$(MAKE) -C DOCS
@@ -45,7 +57,9 @@ docs-clean:
 
 clean:
 	$(MAKE) -C src clean
+	rm -f *.o
 	rm -f $(NFO_READER)
+	rm -f .depend
 
 distclean: clean docs-clean
 	rm -f config.log
@@ -62,7 +76,7 @@ install-pkgconfig: $(PKGCONFIG_FILE)
 	$(INSTALL) -d "$(PKGCONFIG_DIR)"
 	$(INSTALL) -m 644 $< "$(PKGCONFIG_DIR)"
 
-install-$(NFO_READER): $(NFO_READER)
+install-$(NFO_READER): test
 	$(INSTALL) -d $(bindir)
 	$(INSTALL) -c -m 755 $(NFO_READER) $(bindir)
 
@@ -83,7 +97,7 @@ uninstall-$(NFO_READER):
 uninstall-docs:
 	$(MAKE) -C DOCS uninstall
 
-.PHONY: *clean *install* docs
+.PHONY: *clean *install* docs test*
 
 dist:
 	-$(RM) $(DISTFILE)
@@ -99,3 +113,10 @@ dist-all:
 	cp $(EXTRADIST) $(NFO_READER_SRCS) Makefile $(DIST)
 
 .PHONY: dist dist-all
+
+#
+# include dependency files if they exist
+#
+ifneq ($(wildcard .depend),)
+include .depend
+endif
