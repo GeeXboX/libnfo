@@ -681,7 +681,6 @@ check_cflags -D_FILE_OFFSET_BITS=64
 check_cflags -D_REENTRANT
 
 # default extralibs
-add_extralibs -lpthread
 
 #################################################
 #   check for debug symbols
