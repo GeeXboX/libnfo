@@ -14,7 +14,7 @@ override CFLAGS += -Isrc
 override LDFLAGS += -Lsrc -lnfo
 
 ifeq ($(BUILD_STATIC),yes)
-  LDFLAGS += $(EXTRALIBS)
+  override LDFLAGS += $(EXTRALIBS)
 endif
 
 DISTFILE = libnfo-$(VERSION).tar.bz2
