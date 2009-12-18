@@ -720,7 +720,6 @@ fi
 echolog "Checking for libxml2 ..."
 check_lib libxml2/libxml/xmlexports.h xmlReadMemory -lxml2 || die "Error, can't find libxml2 !"
 add_pkgconfig_deps libxml-2.0
-add_pkgconfig_requires libxml-2.0
 
 
 #################################################
