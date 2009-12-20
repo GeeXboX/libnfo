@@ -6,7 +6,7 @@ syntax: regexp
 ~$
 config.log
 config.mak
-nfo-reader$
-nfo-writer
+libnfo-reader$
+libnfo-writer$
 ^libnfo.pc
 ^DOCS/doxygen
