@@ -10,7 +10,7 @@ NFO_READER      = libnfo-reader
 NFO_READER_SRCS = libnfo-reader.c
 NFO_READER_OBJS = $(NFO_READER_SRCS:.c=.o)
 
-override CFLAGS += -Isrc
+override CPPFLAGS += -Isrc
 override LDFLAGS += -Lsrc -lnfo
 
 ifeq ($(BUILD_STATIC),yes)
@@ -35,7 +35,7 @@ SUBDIRS = \
 all: lib apps docs
 
 .c.o:
-	$(CC) -c $(CFLAGS) $(EXTRACFLAGS) $(OPTFLAGS) -o $@ $<
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) $(OPTFLAGS) -o $@ $<
 
 lib:
 	$(MAKE) -C src
@@ -44,7 +44,7 @@ $(NFO_READER): $(NFO_READER_OBJS)
 	$(CC) $(NFO_READER_OBJS) $(LDFLAGS) -o $(NFO_READER)
 
 apps-dep:
-	$(CC) -MM $(CFLAGS) $(EXTRACFLAGS) $(NFO_READER_SRCS) 1>.depend
+	$(CC) -MM $(CFLAGS) $(CPPFLAGS) $(NFO_READER_SRCS) 1>.depend
 
 apps: apps-dep lib
 	$(MAKE) $(NFO_READER)

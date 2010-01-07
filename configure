@@ -112,17 +112,19 @@ flags_saved(){
 save_flags(){
     flags_saved && return
     SAVE_CFLAGS="$CFLAGS"
-    SAVE_extracflags="$extracflags"
+    SAVE_CPPFLAGS="$CPPFLAGS"
     SAVE_LDFLAGS="$LDFLAGS"
     SAVE_extralibs="$extralibs"
 }
 
 restore_flags(){
     CFLAGS="$SAVE_CFLAGS"
+    CPPFLAGS="$SAVE_CPPFLAGS"
     HOST_CFLAGS="$SAVE_HOST_CFLAGS"
     LDFLAGS="$SAVE_LDFLAGS"
     extralibs="$SAVE_extralibs"
     unset SAVE_CFLAGS
+    unset SAVE_CPPFLAGS
     unset SAVE_HOST_CFLAGS
     unset SAVE_LDFLAGS
     unset SAVE_extralibs
@@ -130,6 +132,10 @@ restore_flags(){
 
 temp_cflags(){
     temp_append CFLAGS "$@"
+}
+
+temp_CPPFLAGS(){
+    temp_append CPPFLAGS "$@"
 }
 
 temp_host_cflags(){
@@ -175,6 +181,10 @@ add_cflags(){
     append CFLAGS "$@"
 }
 
+add_cppflags(){
+    append CPPFLAGS "$@"
+}
+
 add_ldflags(){
     append LDFLAGS "$@"
 }
@@ -196,7 +206,7 @@ check_cc(){
     log check_cc "$@"
     cat >$TMPC
     log_file $TMPC
-    check_cmd $cc $CFLAGS "$@" -c -o $TMPO $TMPC
+    check_cmd $cc $CPPFLAGS $CFLAGS "$@" -c -o $TMPO $TMPC
 }
 
 check_host_cc(){
@@ -210,7 +220,7 @@ check_cpp(){
     log check_cpp "$@"
     cat >$TMPC
     log_file $TMPC
-    check_cmd $cc $CFLAGS "$@" -E -o $TMPO $TMPC
+    check_cmd $cc $CPPFLAGS $CFLAGS "$@" -E -o $TMPO $TMPC
 }
 
 check_ld(){
@@ -227,6 +237,13 @@ check_host_ld(){
 
 check_exec(){
     check_ld "$@" && { enabled cross_compile || $TMPE >>$logfile 2>&1; }
+}
+
+check_cppflags(){
+    log check_cppflags "$@"
+    check_cc "$@" <<EOF && append CPPFLAGS "$@"
+int x;
+EOF
 }
 
 check_cflags(){
@@ -676,9 +693,9 @@ od -A n -t x1 $TMPO | grep -q '42 *49 *47 *45' && enable bigendian
 # add some useful compiler flags if supported
 check_cflags -W
 check_cflags -Wall
-check_cflags -D_LARGEFILE_SOURCE
-check_cflags -D_FILE_OFFSET_BITS=64
-check_cflags -D_REENTRANT
+check_cppflags -D_LARGEFILE_SOURCE
+check_cppflags -D_FILE_OFFSET_BITS=64
+check_cppflags -D_REENTRANT
 
 # default extralibs
 
@@ -687,7 +704,7 @@ check_cflags -D_REENTRANT
 #################################################
 if enabled debug; then
   add_cflags -g3 -O0
-  add_cflags -DHAVE_DEBUG
+  add_cppflags -DHAVE_DEBUG
   optimize="no"
 fi
 
@@ -713,7 +730,7 @@ fi
 #   check for libxml2
 #################################################
 if [ -n "$xml2dir" ]; then
-  check_cflags -I$xml2dir
+  check_cppflags -I$xml2dir
   check_ldflags -L$xml2dir
 fi
 
@@ -742,7 +759,7 @@ restore_flags
 #   Miscellaneous
 #################################################
 if enabled logcolor; then
-  add_cflags -DUSE_LOGCOLOR
+  add_cppflags -DUSE_LOGCOLOR
 fi
 
 # Doxygen
@@ -773,7 +790,7 @@ echolog "  optimize           $optimize"
 echolog "  static             ${static}"
 echolog "  shared             ${shared}"
 echolog ""
-echolog "  CFLAGS             $CFLAGS $extracflags"
+echolog "  CFLAGS             $CFLAGS $CPPFLAGS"
 echolog "  LDFLAGS            $LDFLAGS"
 echolog "  extralibs          $extralibs"
 echolog ""
@@ -816,6 +833,7 @@ else
 fi
 append_config "EXTRALIBS=$extralibs"
 
+append_config "CPPFLAGS=$CPPFLAGS"
 append_config "OPTFLAGS=$CFLAGS"
 append_config "LDFLAGS=$LDFLAGS"
 append_config "INSTALL=$INSTALL"
