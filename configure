@@ -452,6 +452,8 @@ for opt do
   ;;
   --disable-strip) dostrip="no"
   ;;
+  --enable-optimize) optimize="yes"
+  ;;
   --disable-optimize) optimize="no"
   ;;
   --enable-small) small="yes"
