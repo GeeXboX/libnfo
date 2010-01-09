@@ -24,6 +24,7 @@ EXTRADIST = \
 	ChangeLog \
 	configure \
 	COPYING \
+	libnfo-reader.1 \
 	README \
 
 SUBDIRS = \
