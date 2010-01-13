@@ -732,6 +732,16 @@ unsigned int endian = 'B' << 24 | 'I' << 16 | 'G' << 8 | 'E';
 EOF
 od -A n -t x1 $TMPO | grep -q '42 *49 *47 *45' && enable bigendian
 
+# Non-POSIX OS Dependancies
+check_ld <<EOF && need_strndup=no || need_strndup=yes
+#include <string.h>
+int main(void) {
+(void *)strndup("test",1);
+return 0;
+}
+EOF
+enabled need_strndup && add_cppflags -DNEED_OSDEP_STRNDUP
+
 # add some useful compiler flags if supported
 check_cflags -W
 check_cflags -Wall

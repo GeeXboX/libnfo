@@ -31,6 +31,7 @@
 #include <libxml/xpath.h>
 
 #include "nfo.h"
+#include "nfo_osdep.h"
 #include "nfo_priv.h"
 #include "nfo_xml_utils.h"
 

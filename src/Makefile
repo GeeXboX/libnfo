@@ -26,12 +26,14 @@ endif
 
 SRCS =  \
 	nfo.c \
+	nfo_osdep.c \
 	nfo_priv.c \
 	nfo_xml_utils.c \
 	nfo_xml_parser.c \
 
 EXTRADIST = \
 	nfo.h \
+	nfo_osdep.h \
 	nfo_priv.h \
 	nfo_xml_parser.h \
 	nfo_xml_utils.h \
