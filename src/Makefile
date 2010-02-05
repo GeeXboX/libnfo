@@ -21,7 +21,7 @@ ifeq ($(BUILD_SHARED),yes)
       SHARED_LIBNAME         = $(LIBNAME)-$(shell echo $(VERSION) | cut -f1 -d.).dll
       SHARED_LIBNAME_VERSION = $(SHARED_LIBNAME)
       SHARED_LIBNAME_MAJOR   = $(SHARED_LIBNAME)
-      SHARED_LIBNAME_FLAGS   = -shared -Wl,--out-implib=$(LIBNAME).dll.a -Wl,--export-all-symbols -Wl,--enable-auto-import -Wl,--exclude-symbols,libxml2_NULL_THUNK_DATA
+      SHARED_LIBNAME_FLAGS   = -shared -Wl,--out-implib=$(LIBNAME).dll.a -Wl,--export-all-symbols -Wl,--enable-auto-import
     else
       SHARED_LIBNAME         = $(LIBNAME).so
       SHARED_LIBNAME_VERSION = $(SHARED_LIBNAME).$(VERSION)
