@@ -91,7 +91,7 @@ install: $(BUILD_RULES)
 
 uninstall:
 	if [ $(BUILD_MINGW32) = no ]; then \
-	  rm -f $(bindir)/$(SHARED_LIBNAME)
+	  rm -f $(bindir)/$(SHARED_LIBNAME); \
 	fi
 	rm -f $(libdir)/$(STATIC_LIBNAME)
 	rm -f $(libdir)/$(SHARED_LIBNAME)*
