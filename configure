@@ -202,6 +202,10 @@ add_pkgconfig_requires(){
     append pkgconfig_requires "$@"
 }
 
+add_pkgconfig_libs(){
+    append pkgconfig_libs "$@"
+}
+
 check_cmd(){
     log "$@"
     "$@" >>$logfile 2>&1
@@ -327,6 +331,41 @@ check_libconfig(){
     return $err
 }
 
+check_pkgconfig(){
+    local pkg func ccflags clibs err
+    log check_pkgconfig "$@"
+    pkg="$1"
+    func="$2"
+    ccflags="${3:---cflags}"
+    clibs="${4:---libs}"
+    err=1
+    if `which pkg-config 1>/dev/null 2>&1`; then
+      cflags=`pkg-config $pkg $ccflags`
+      [ -n "$cflags" ] && check_cflags "$cflags"
+      libs=`pkg-config $pkg $clibs`
+      if [ -n "$libs" ]; then
+        temp_extralibs "$libs"
+        check_func $func && add_extralibs "$libs"
+        err=$?
+        restore_flags
+      fi
+    fi
+    return $err
+}
+
+check_lib_pkgcfg(){
+    local pkg header func err
+    log check_lib_pkgcfg "$@"
+    pkg="$1"
+    header="$2"
+    func="$3"
+    shift 3
+    err=1
+    check_pkgconfig $pkg $func && add_pkgconfig_requires $pkg && err=0
+    [ "$err" != 0 ] && check_lib $header $func "$@" && add_pkgconfig_libs "$@" && err=0
+    return $err
+}
+
 check_lib_version() {
     check_cmd pkg-config "$1" --atleast-version="$2"
     err=$?
@@ -419,6 +458,7 @@ pic="no"
 INSTALL="install"
 VERSION=""
 pkgconfig_requires=""
+pkgconfig_libs=""
 logcolor="yes"
 doc="no"
 
@@ -782,8 +822,7 @@ if [ -n "$xml2dir" ]; then
 fi
 
 echolog "Checking for libxml2 ..."
-check_lib libxml2/libxml/xmlexports.h xmlReadMemory -lxml2 || die "Error, can't find libxml2 !"
-add_pkgconfig_deps libxml-2.0
+check_lib_pkgcfg libxml-2.0 libxml/xmlexports.h xmlReadMemory -lxml2 || die "Error, can't find libxml2 !"
 
 
 #################################################
@@ -903,7 +942,7 @@ pkgconfig_generate libnfo \
                    "A .NFO file reader/writer" \
                    "$VERSION" \
                    "-lnfo" \
-                   "$extralibs" \
+                   "$pkgconfig_libs" \
                    "" \
                    "" \
                    "$pkgconfig_requires"
