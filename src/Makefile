@@ -91,8 +91,9 @@ install: $(BUILD_RULES)
 	$(INSTALL) -c -m 644 nfo.h $(includedir)
 
 uninstall:
-	if [ $(BUILD_MINGW32) = no ]; then \
+	if [ $(BUILD_MINGW32) = yes ]; then \
 	  rm -f $(bindir)/$(SHARED_LIBNAME); \
+	  rm -f $(libdir)/$(LIBNAME).dll.a; \
 	fi
 	rm -f $(libdir)/$(STATIC_LIBNAME)
 	rm -f $(libdir)/$(SHARED_LIBNAME)*
