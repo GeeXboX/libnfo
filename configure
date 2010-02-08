@@ -828,18 +828,17 @@ check_lib_pkgcfg libxml-2.0 libxml/xmlexports.h xmlReadMemory -lxml2 || die "Err
 #################################################
 #   version
 #################################################
-temp_host_cflags "-Isrc"
-check_host_ld <<EOF
-#include <stdio.h>
-#include <nfo.h>
-int main(){
-  printf("LIBNFO_VERSION:"LIBNFO_VERSION_STR);
-  printf("\n");
-  return 0;
+get_version(){
+    local name file version
+    name=$1
+    file=src/$2
+    eval $(grep "#define ${name}_VERSION_M" "$file" | awk '{ print $2"="$3 }')
+    eval version=\$${name}_VERSION_MAJOR.\$${name}_VERSION_MINOR.\$${name}_VERSION_MICRO
+    echo $version
 }
-EOF
-VERSION=`strings $TMPE | sed -n -e 's,LIBNFO_VERSION:,,p'`
-restore_flags
+
+VERSION=`get_version LIBNFO nfo.h`
+
 
 #################################################
 #   Miscellaneous
