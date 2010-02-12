@@ -11,14 +11,14 @@ NFO_READER_SRCS = libnfo-reader.c
 NFO_READER_OBJS = $(NFO_READER_SRCS:.c=.o)
 NFO_READER_MAN  = $(NFO_READER).1
 
-MANS = $(NFO_READER_MAN)
+APPS_CPPFLAGS = $(CPPFLAGS) -Isrc
+APPS_LDFLAGS = $(LDFLAGS) -Lsrc -lnfo
 
-override CPPFLAGS += -Isrc
-override LDFLAGS += -Lsrc -lnfo
+MANS = $(NFO_READER_MAN)
 
 ifeq ($(BUILD_STATIC),yes)
 ifeq ($(BUILD_SHARED),no)
-  override LDFLAGS += $(EXTRALIBS)
+  APPS_LDFLAGS += $(EXTRALIBS)
 endif
 endif
 
@@ -41,7 +41,7 @@ SUBDIRS = \
 all: lib apps docs
 
 .c.o:
-	$(CC) -c $(OPTFLAGS) $(CFLAGS) $(CPPFLAGS) -o $@ $<
+	$(CC) -c $(OPTFLAGS) $(CFLAGS) $(APPS_CPPFLAGS) -o $@ $<
 
 config.mak: configure
 	@echo "############################################################"
@@ -52,10 +52,10 @@ lib:
 	$(MAKE) -C src
 
 $(NFO_READER): $(NFO_READER_OBJS)
-	$(CC) $(NFO_READER_OBJS) $(LDFLAGS) -o $(NFO_READER)
+	$(CC) $(NFO_READER_OBJS) $(APPS_LDFLAGS) -o $(NFO_READER)
 
 apps-dep:
-	$(CC) -MM $(CFLAGS) $(CPPFLAGS) $(NFO_READER_SRCS) 1>.depend
+	$(CC) -MM $(CFLAGS) $(APPS_CPPFLAGS) $(NFO_READER_SRCS) 1>.depend
 
 apps: apps-dep lib
 	$(MAKE) $(NFO_READER)
