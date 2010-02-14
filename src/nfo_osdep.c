@@ -26,7 +26,7 @@
 
 #ifdef NEED_OSDEP_STRNDUP
 char *
-strndup (const char *s, size_t n)
+nfo_strndup (const char *s, size_t n)
 {
   char *res;
   size_t length;

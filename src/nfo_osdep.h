@@ -23,7 +23,9 @@
 #define NFO_OSDEP_H
 
 #ifdef NEED_OSDEP_STRNDUP
-char * strndup (const char *s, size_t n);
+char *nfo_strndup (const char *s, size_t n);
+#undef  strndup
+#define strndup nfo_strndup
 #endif /* NEED_OSDEP_STRNDUP */
 
 #endif /* NFO_OSDEP_H */
