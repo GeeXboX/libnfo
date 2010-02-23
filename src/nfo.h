@@ -54,10 +54,6 @@ extern "C" {
 
 #include <inttypes.h>
 
-/**
- * @}
- */
-
 /* Structure definitions */
 typedef struct nfo_stream_video_s nfo_stream_video_t;
 typedef struct nfo_stream_audio_s nfo_stream_audio_t;
