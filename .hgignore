@@ -5,9 +5,9 @@ syntax: regexp
 \.depend
 \.a
 ~$
-config.log
-config.mak
+config\.log
+config\.mak
 libnfo-reader$
 libnfo-writer$
-^libnfo.pc
+^libnfo\.pc
 ^DOCS/doxygen
