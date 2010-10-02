@@ -1,4 +1,7 @@
-2009-12-05  Benjamin Zores  <ben@geexbox.org>
+libnfo (1.0)
 
-        * Initial project release (v1.0.0).
-	* Video (including TVShows) NFO file parsing.
+
+  1.0.0: 5 Dec, 2009
+
+    * Initial project release.
+    * Video (including TVShows) NFO file parsing.
