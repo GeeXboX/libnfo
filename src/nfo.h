@@ -1,6 +1,6 @@
 /*
  * GeeXboX libnfo: a .NFO file reader/writer.
- * Copyright (C) 2009 Benjamin Zores <ben@geexbox.org>
+ * Copyright (C) 2009-2010 Benjamin Zores <ben@geexbox.org>
  *
  * This file is part of libnfo.
  *
