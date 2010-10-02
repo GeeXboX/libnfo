@@ -44,11 +44,11 @@ extern "C" {
 #define LIBNFO_VERSION_MICRO  0
 
 #define LIBNFO_VERSION_INT NFO_VERSION_INT(LIBNFO_VERSION_MAJOR, \
-                                               LIBNFO_VERSION_MINOR, \
-                                               LIBNFO_VERSION_MICRO)
-#define LIBNFO_VERSION     NFO_VERSION(LIBNFO_VERSION_MAJOR, \
                                            LIBNFO_VERSION_MINOR, \
                                            LIBNFO_VERSION_MICRO)
+#define LIBNFO_VERSION     NFO_VERSION(LIBNFO_VERSION_MAJOR, \
+                                       LIBNFO_VERSION_MINOR, \
+                                       LIBNFO_VERSION_MICRO)
 #define LIBNFO_VERSION_STR NFO_TOSTRING(LIBNFO_VERSION)
 #define LIBNFO_BUILD       LIBNFO_VERSION_INT
 
