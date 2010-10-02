@@ -1,5 +1,9 @@
 libnfo (1.0)
 
+  1.0.1: 2 Oct, 2010
+
+    * Support for Darwin and MS Windows.
+    * Fixes and enhancements in Makefile and configure.
 
   1.0.0: 5 Dec, 2009
 
