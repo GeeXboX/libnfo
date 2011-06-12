@@ -23,7 +23,14 @@
 
 #include "nfo.h"
 #include "nfo_priv.h"
+
+#ifdef XML_PARSER_LIBXML
 #include "nfo_xml_parser_libxml.h"
+#endif
+
+#ifdef XML_PARSER_EXPAT
+#include "nfo_xml_parser_expat.h"
+#endif
 
 static int
 list_get_length (void *list)

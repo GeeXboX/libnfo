@@ -57,6 +57,7 @@ show_help(){
   echo "  --cross-prefix=PREFIX       use PREFIX for compilation tools [$cross_prefix]"
   echo "  --cross-compile             assume a cross-compiler is used"
   echo "  --enable-pic                build position-independent code"
+  echo "  --xml-lib=LIB               where LIB is auto|expat|libxml2"
   echo ""
   echo "Miscellaneous:"
   echo "  --disable-logcolor          disable colorful console output on terminals"
@@ -455,6 +456,7 @@ extralibs=""
 installstrip="-s"
 cross_compile="no"
 pic="no"
+xml="auto"
 INSTALL="install"
 VERSION=""
 pkgconfig_requires=""
@@ -519,6 +521,8 @@ for opt do
   --enable-pic) pic="yes";
   ;;
   --disable-pic) pic="no";
+  ;;
+  --xml-lib=*) xml="$optval";
   ;;
   --enable-logcolor) logcolor="yes";
   ;;
@@ -818,26 +822,40 @@ elif enabled optimize; then
 fi
 
 #################################################
+#   check for XML library
+#################################################
+if [ "$xml" != auto -a "$xml" != expat -a "$xml" != libxml2 ]; then
+  die "Invalid XML implementation"
+fi
+[ "$xml" = auto ] && xml=libxml2
+
+#################################################
 #   check for libxml2
 #################################################
-if [ -n "$xml2dir" ]; then
-  check_cppflags -I$xml2dir
-  check_ldflags -L$xml2dir
-fi
+if [ "$xml" = libxml2 ]; then
+  if [ -n "$xml2dir" ]; then
+    check_cppflags -I$xml2dir
+    check_ldflags -L$xml2dir
+  fi
 
-echolog "Checking for libxml2 ..."
-check_lib_pkgcfg libxml-2.0 libxml/xmlexports.h xmlReadMemory -lxml2 || die "Error, can't find libxml2 !"
+  echolog "Checking for libxml2 ..."
+  check_lib_pkgcfg libxml-2.0 libxml/xmlexports.h xmlReadMemory -lxml2 || die "Error, can't find libxml2 !"
+  add_cppflags -DXML_PARSER_LIBXML
+fi
 
 #################################################
 #   check for libexpat
 #################################################
-if [ -n "$expatdir" ]; then
-  check_cppflags -I$expatdir
-  check_ldflags -L$expatdir
-fi
+if [ "$xml" = expat ]; then
+  if [ -n "$expatdir" ]; then
+    check_cppflags -I$expatdir
+    check_ldflags -L$expatdir
+  fi
 
-echolog "Checking for libexpat ..."
-check_lib expat.h XML_ExpatVersion -lexpat || die "Error, can't find libexpat !"
+  echolog "Checking for libexpat ..."
+  check_lib expat.h XML_ExpatVersion -lexpat || die "Error, can't find libexpat !"
+  add_cppflags -DXML_PARSER_EXPAT
+fi
 
 #################################################
 #   version
@@ -898,6 +916,7 @@ echolog "  LDFLAGS            $LDFLAGS"
 echolog "  extralibs          $extralibs"
 echolog ""
 echolog "Miscellaneous:"
+echolog "  XML Parser:        $xml"
 echolog "  Documentation:     $doc"
 echolog ""
 
@@ -922,8 +941,13 @@ append_config "AR=$ar"
 append_config "RANLIB=$ranlib"
 append_config "LN=ln"
 
-append_config "XML_USES_LIBXML=yes"
-append_config "XML_USES_EXPAT=yes"
+if [ "$xml" = libxml2 ]; then
+  append_config "XML_USES_LIBXML=yes"
+  append_config "XML_USES_EXPAT=no"
+elif [ "$xml" = expat ]; then
+  append_config "XML_USES_LIBXML=no"
+  append_config "XML_USES_EXPAT=yes"
+fi
 
 append_config "BUILD_STATIC=$static"
 append_config "BUILD_SHARED=$shared"

@@ -39,16 +39,23 @@ SRCS_LIBXML = \
 	nfo_xml_utils_libxml.c \
 	nfo_xml_parser_libxml.c \
 
+SRCS_EXPAT = \
+	nfo_xml_parser_expat.c \
+
 ifeq ($(XML_USES_LIBXML),yes)
   SRCS += $(SRCS_LIBXML)
+endif
+ifeq ($(XML_USES_EXPAT),yes)
+  SRCS += $(SRCS_EXPAT)
 endif
 
 EXTRADIST = \
 	nfo.h \
 	nfo_osdep.h \
 	nfo_priv.h \
-	nfo_xml_parser.h \
-	nfo_xml_utils.h \
+	nfo_xml_parser_libxml.h \
+	nfo_xml_parser_expat.h \
+	nfo_xml_utils_libxml.h \
 
 OBJS = $(SRCS:.c=.o)
 
