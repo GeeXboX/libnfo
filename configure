@@ -44,6 +44,7 @@ show_help(){
   echo ""
   echo "Search paths:"
   echo "  --with-xml2-dir=DIR         check for libxml2 installed in DIR"
+  echo "  --with-expat-dir=DIR        check for libexpat installed in DIR"
   echo ""
   echo "Advanced options (experts only):"
   echo "  --arch=ARCH                 force architecture"
@@ -513,6 +514,8 @@ for opt do
   ;;
   --with-xml2-dir=*) xml2dir="$optval";
   ;;
+  --with-expat-dir=*) expatdir="$optval";
+  ;;
   --enable-pic) pic="yes";
   ;;
   --disable-pic) pic="no";
@@ -825,6 +828,16 @@ fi
 echolog "Checking for libxml2 ..."
 check_lib_pkgcfg libxml-2.0 libxml/xmlexports.h xmlReadMemory -lxml2 || die "Error, can't find libxml2 !"
 
+#################################################
+#   check for libexpat
+#################################################
+if [ -n "$expatdir" ]; then
+  check_cppflags -I$expatdir
+  check_ldflags -L$expatdir
+fi
+
+echolog "Checking for libexpat ..."
+check_lib expat.h XML_ExpatVersion -lexpat || die "Error, can't find libexpat !"
 
 #################################################
 #   version
@@ -910,6 +923,7 @@ append_config "RANLIB=$ranlib"
 append_config "LN=ln"
 
 append_config "XML_USES_LIBXML=yes"
+append_config "XML_USES_EXPAT=yes"
 
 append_config "BUILD_STATIC=$static"
 append_config "BUILD_SHARED=$shared"
