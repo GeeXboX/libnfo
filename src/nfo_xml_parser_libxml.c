@@ -33,7 +33,7 @@
 #include "nfo.h"
 #include "nfo_osdep.h"
 #include "nfo_priv.h"
-#include "nfo_xml_utils.h"
+#include "nfo_xml_utils_libxml.h"
 
 static char *
 nfo_file_exists (const char *dir, const char *file, const char *ext)

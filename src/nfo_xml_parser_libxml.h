@@ -19,9 +19,9 @@
  * Foundation, Inc, 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#ifndef NFO_XML_PARSER_H
-#define NFO_XML_PARSER_H
+#ifndef NFO_XML_PARSER_LIBXML_H
+#define NFO_XML_PARSER_LIBXML_H
 
 void nfo_parse_xml (nfo_t *nfo, const char *filename);
 
-#endif /* NFO_XML_PARSER_H */
+#endif /* NFO_XML_PARSER_LIBXML_H */

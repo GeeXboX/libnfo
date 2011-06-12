@@ -909,6 +909,8 @@ append_config "AR=$ar"
 append_config "RANLIB=$ranlib"
 append_config "LN=ln"
 
+append_config "XML_USES_LIBXML=yes"
+
 append_config "BUILD_STATIC=$static"
 append_config "BUILD_SHARED=$shared"
 append_config "BUILD_DYLIB=$dylib"

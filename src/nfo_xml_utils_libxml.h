@@ -19,8 +19,8 @@
  * Foundation, Inc, 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#ifndef NFO_XML_UTILS_H
-#define NFO_XML_UTILS_H
+#ifndef NFO_XML_UTILS_LIBXML_H
+#define NFO_XML_UTILS_LIBXML_H
 
 xmlDocPtr nfo_get_xml_doc_from_file (const char *filename);
 
@@ -28,4 +28,4 @@ xmlNode *nfo_get_node_xml_tree (xmlNode *root, const char *prop);
 
 xmlChar *nfo_get_prop_value_from_xml_tree (xmlNode *root, const char *prop);
 
-#endif /* NFO_XML_UTILS_H */
+#endif /* NFO_XML_UTILS_LIBXML_H */

@@ -34,8 +34,14 @@ SRCS =  \
 	nfo.c \
 	nfo_osdep.c \
 	nfo_priv.c \
-	nfo_xml_utils.c \
-	nfo_xml_parser.c \
+
+SRCS_LIBXML = \
+	nfo_xml_utils_libxml.c \
+	nfo_xml_parser_libxml.c \
+
+ifeq ($(XML_USES_LIBXML),yes)
+  SRCS += $(SRCS_LIBXML)
+endif
 
 EXTRADIST = \
 	nfo.h \

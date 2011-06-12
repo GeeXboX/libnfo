@@ -23,7 +23,7 @@
 #include <libxml/tree.h>
 #include <libxml/xpath.h>
 
-#include "nfo_xml_utils.h"
+#include "nfo_xml_utils_libxml.h"
 
 xmlDocPtr
 nfo_get_xml_doc_from_file (const char *filename)
